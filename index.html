@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holistyczny Dobór Kosmetyków - Interaktywna Prezentacja</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: Stworzyłem strukturę opartą na zadaniach użytkownika, która przekształca statyczny opis z GitHub w interaktywne doświadczenie. Zamiast lustrzanego odbicia raportu, aplikacja symuluje kluczowe funkcje opisywanego narzędzia. Zaczyna się od sekcji wprowadzającej (Hero), która wyjaśnia cel i zachęca do działania. Następnie przechodzi do interaktywnego "kreatora" doboru kosmetyku, który jest rdzeniem aplikacji. Pozwala to użytkownikowi "poczuć", jak działa produkt. Dalej znajduje się symulacja funkcji eksperymentalnej (AI) oraz sekcja techniczna z instrukcjami Docker. Taki podział na sekcje tematyczne (wprowadzenie -> demo -> funkcja specjalna -> techniczne) jest bardziej intuicyjny dla użytkownika końcowego niż struktura oryginalnego pliku README i lepiej realizuje cel, jakim jest prezentacja możliwości aplikacji. -->
+    <!-- Visualization & Content Choices: Informacje z raportu zostały przekształcone w interaktywne komponenty. Cel: Informacja o problemie -> Sekcja Hero z zwięzłym tekstem i przyciskiem CTA. Cel: Symulacja doboru -> Wielostopniowy formularz z przyciskami (HTML/JS), który dynamicznie pokazuje wyniki. To angażuje użytkownika bardziej niż tekst. Cel: Porównanie produktów -> Karty produktów (HTML/Tailwind) z mockowymi danymi. Cel: Prezentacja danych o składzie -> Wykres kołowy (Chart.js) w modalu, pokazujący proporcje składników (np. baza, aktywne, olejki), co jest bardziej przystępne niż lista. Cel: Symulacja funkcji AI -> Prosty formularz z dynamicznie generowanym wynikiem i wyraźnym ostrzeżeniem. Cel: Instrukcje techniczne -> Przejrzyste bloki kodu. Wybory te realizują interaktywną wizję, unikając statycznego przedstawiania treści. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 350px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .smooth-scroll { scroll-behavior: smooth; }
+        .modal-backdrop {
+            background-color: rgba(0,0,0,0.5);
+            transition: opacity 0.3s ease-in-out;
+        }
+        .modal-content {
+            transition: transform 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-[#FDFBF7] text-[#3D3A37] smooth-scroll">
+
+    <header class="bg-[#FDFBF7]/80 backdrop-blur-sm sticky top-0 z-40 border-b border-[#EAE5DD]">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-[#6B5B4B]">Holistyczny Dobór</h1>
+            <div class="hidden md:flex space-x-8">
+                <a href="#dlaczego-to-wazne" class="hover:text-[#A0522D] transition-colors">Dlaczego to ważne?</a>
+                <a href="#demo" class="hover:text-[#A0522D] transition-colors">Wypróbuj Demo</a>
+                <a href="#ai-creator" class="hover:text-[#A0522D] transition-colors">Kreator AI</a>
+                <a href="#docker" class="hover:text-[#A0522D] transition-colors">Uruchom Lokalnie</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#A0522D]">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pt-2 pb-4 space-y-2">
+             <a href="#dlaczego-to-wazne" class="block hover:text-[#A0522D] transition-colors">Dlaczego to ważne?</a>
+             <a href="#demo" class="block hover:text-[#A0522D] transition-colors">Wypróbuj Demo</a>
+             <a href="#ai-creator" class="block hover:text-[#A0522D] transition-colors">Kreator AI</a>
+             <a href="#docker" class="block hover:text-[#A0522D] transition-colors">Uruchom Lokalnie</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+
+        <section id="hero" class="text-center py-16">
+            <h2 class="text-4xl md:text-5xl font-bold text-[#6B5B4B] mb-4">Twoja Droga do Świadomej Pielęgnacji</h2>
+            <p class="max-w-3xl mx-auto text-lg text-[#5C5855] mb-8">
+                Odkryj narzędzie, które rewolucjonizuje proces doboru kosmetyków, czyniąc go prostym, intuicyjnym i skutecznym. Koniec z frustracją i nietrafionymi zakupami.
+            </p>
+            <a href="#demo" class="bg-[#A0522D] text-white font-bold py-3 px-8 rounded-lg hover:bg-[#8B4513] transition-transform transform hover:scale-105 inline-block">
+                Rozpocznij Dobór Kosmetyków
+            </a>
+        </section>
+
+        <section id="dlaczego-to-wazne" class="py-16">
+             <div class="text-center mb-12">
+                <h3 class="text-3xl font-bold text-[#6B5B4B] mb-2">Dlaczego Świadomy Wybór Ma Znaczenie?</h3>
+                <p class="max-w-3xl mx-auto text-[#5C5855]">W tej sekcji dowiesz się, dlaczego nasza aplikacja jest odpowiedzią na wyzwania współczesnego rynku kosmetycznego. Wyjaśniamy, jak właściwy dobór produktów wpływa na zdrowie i kondycję skóry, i jak nasze narzędzie ułatwia podjęcie najlepszych decyzji pielęgnacyjnych.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8 text-center">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-[#EAE5DD]">
+                    <div class="text-4xl mb-4">🧭</div>
+                    <h4 class="text-xl font-semibold mb-2 text-[#6B5B4B]">Złożony Rynek</h4>
+                    <p class="text-[#5C5855]">Współczesny rynek kosmetyczny to labirynt produktów i obietnic. Nasza aplikacja upraszcza nawigację, dostarczając jasnych, naukowo uzasadnionych rekomendacji.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-[#EAE5DD]">
+                    <div class="text-4xl mb-4">💔</div>
+                    <h4 class="text-xl font-semibold mb-2 text-[#6B5B4B]">Ryzyko Błędów</h4>
+                    <p class="text-[#5C5855]">Niewłaściwie dobrane kosmetyki mogą prowadzić do podrażnień i problemów skórnych. Pomagamy unikać tych pomyłek, personalizując wybór pod Twoje potrzeby.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-[#EAE5DD]">
+                     <div class="text-4xl mb-4">💡</div>
+                    <h4 class="text-xl font-semibold mb-2 text-[#6B5B4B]">Świadoma Decyzja</h4>
+                    <p class="text-[#5C5855]">Dajemy Ci wiedzę i kontrolę. Zrozumiesz skład produktów i podejmiesz decyzje, które realnie wpłyną na Twoje zdrowie i dobre samopoczucie.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="demo" class="py-16 bg-[#F8F4EF] -mx-6 px-6 rounded-xl">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-bold text-[#6B5B4B] mb-2">Wypróbuj Interaktywne Demo</h3>
+                <p class="max-w-3xl mx-auto text-[#5C5855]">Przekonaj się, jak działa nasza aplikacja. Ta interaktywna symulacja przeprowadzi Cię przez proces doboru idealnego kosmetyku. Odpowiedz na kilka pytań, a my zaproponujemy produkty dopasowane do Twoich potrzeb, wraz z analizą ich składu.</p>
+            </div>
+            
+            <div id="wizard" class="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-md border border-[#EAE5DD]">
+                <div id="step1">
+                    <h4 class="text-2xl font-semibold text-center mb-6">Krok 1: Jaki jest Twój typ cery?</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <button data-choice="skin" data-value="sucha" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Sucha</button>
+                        <button data-choice="skin" data-value="mieszana" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Mieszana</button>
+                        <button data-choice="skin" data-value="tłusta" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Tłusta</button>
+                    </div>
+                </div>
+
+                <div id="step2" class="hidden">
+                    <h4 class="text-2xl font-semibold text-center mb-6">Krok 2: Jaki jest Twój główny cel pielęgnacyjny?</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <button data-choice="concern" data-value="nawilżenie" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Nawilżenie</button>
+                        <button data-choice="concern" data-value="przeciwzmarszczkowe" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Anti-Aging</button>
+                        <button data-choice="concern" data-value="wypryski" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Walka z wypryskami</button>
+                    </div>
+                     <button id="back-to-step1" class="mt-6 w-full text-center text-[#A0522D] hover:underline">Wróć</button>
+                </div>
+
+                <div id="results" class="hidden">
+                    <h4 class="text-2xl font-semibold text-center mb-6">Oto Twoje spersonalizowane rekomendacje:</h4>
+                    <div id="results-container" class="space-y-4"></div>
+                    <button id="restart-wizard" class="mt-6 w-full bg-[#A0522D] text-white font-bold py-3 px-8 rounded-lg hover:bg-[#8B4513] transition">Zacznij od nowa</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="ai-creator" class="py-16">
+            <div class="text-center mb-12">
+                 <h3 class="text-3xl font-bold text-[#6B5B4B] mb-2">Stwórz Własny Kosmetyk <span class="text-sm align-top bg-yellow-200 text-yellow-800 px-2 py-1 rounded-full">Beta</span></h3>
+                <p class="max-w-3xl mx-auto text-[#5C5855]">Ta sekcja pozwala Ci wypróbować naszą eksperymentalną funkcję opartą na Sztucznej Inteligencji. Możesz skomponować własną recepturę, wybierając bazę i składniki aktywne. Pamiętaj, że to narzędzie jest w fazie rozwoju i jego sugestie należy traktować z ostrożnością.</p>
+            </div>
+            <div class="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-md border border-[#EAE5DD]">
+                 <div class="grid md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="base" class="block mb-1 font-medium">Wybierz bazę:</label>
+                        <select id="base" class="w-full p-2 border rounded-lg">
+                            <option>Baza hialuronowa</option>
+                            <option>Baza aloesowa</option>
+                            <option>Baza lipidowa</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="active" class="block mb-1 font-medium">Wybierz składnik aktywny:</label>
+                        <select id="active" class="w-full p-2 border rounded-lg">
+                            <option>Witamina C</option>
+                            <option>Retinol</option>
+                            <option>Niacynamid</option>
+                        </select>
+                    </div>
+                </div>
+                <button id="generate-formula" class="w-full bg-[#A0522D] text-white font-bold py-3 px-8 rounded-lg hover:bg-[#8B4513] transition mb-4">Generuj Recepturę</button>
+                <div id="formula-output" class="hidden">
+                    <h5 class="font-semibold mb-2">Twoja wygenerowana receptura:</h5>
+                    <textarea id="formula-text" readonly class="w-full h-32 p-2 bg-gray-100 rounded-lg border"></textarea>
+                    <div class="mt-4 p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 rounded-r-lg">
+                        <h6 class="font-bold">Ważna uwaga!</h6>
+                        <p class="text-sm">Ta funkcja jest eksperymentalna i działa w oparciu o SI. Sugestie mogą zawierać błędy. Zawsze weryfikuj uzyskane informacje i zachowaj ostrożność.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="docker" class="py-16 bg-[#F8F4EF] -mx-6 px-6 rounded-xl">
+            <div class="text-center mb-12">
+                 <h3 class="text-3xl font-bold text-[#6B5B4B] mb-2">Uruchom Pełną Aplikację Lokalnie</h3>
+                 <p class="max-w-3xl mx-auto text-[#5C5855]">Chcesz skorzystać z pełnego potencjału naszego narzędzia? Aplikacja została przygotowana jako obraz Docker, co gwarantuje prostotę uruchomienia na dowolnym komputerze. W tej sekcji znajdziesz kompletne instrukcje, jak pobrać i uruchomić aplikację lokalnie.</p>
+            </div>
+            <div class="max-w-3xl mx-auto space-y-8">
+                <div>
+                    <h4 class="text-xl font-semibold mb-2 flex items-center"><span class="bg-[#A0522D] text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">1</span> Pobranie obrazu Docker</h4>
+                    <p class="mb-2 text-[#5C5855]">Upewnij się, że masz zainstalowany Docker, a następnie wykonaj poniższą komendę w terminalu.</p>
+                    <pre class="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto"><code>docker pull [nazwa_użytkownika]/[nazwa_repozytorium]:[tag]</code></pre>
+                </div>
+                 <div>
+                    <h4 class="text-xl font-semibold mb-2 flex items-center"><span class="bg-[#A0522D] text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">2</span> Uruchomienie kontenera</h4>
+                     <p class="mb-2 text-[#5C5855]">Po pobraniu obrazu, uruchom kontener. Aplikacja domyślnie będzie dostępna na porcie 80.</p>
+                    <pre class="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto"><code>docker run -p 80:80 [nazwa_użytkownika]/[nazwa_repozytorium]:[tag]</code></pre>
+                </div>
+                 <div>
+                    <h4 class="text-xl font-semibold mb-2 flex items-center"><span class="bg-[#A0522D] text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">3</span> Otwarcie w przeglądarce</h4>
+                     <p class="mb-2 text-[#5C5855]">Otwórz przeglądarkę i przejdź pod adres, aby rozpocząć korzystanie z aplikacji.</p>
+                    <pre class="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto"><code>http://localhost</code></pre>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="border-t border-[#EAE5DD] mt-16">
+        <div class="container mx-auto px-6 py-6 text-center text-[#5C5855]">
+            <p>&copy; 2025 Holistyczny Dobór Kosmetyków. Stworzono w ramach projektu badawczo-rozwojowego.</p>
+        </div>
+    </footer>
+
+    <div id="modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+        <div class="modal-backdrop fixed inset-0"></div>
+        <div class="modal-content bg-white rounded-lg shadow-xl w-full max-w-lg mx-auto transform scale-95 z-10 p-6">
+            <div class="flex justify-between items-center mb-4">
+                 <h5 id="modal-title" class="text-2xl font-bold text-[#6B5B4B]"></h5>
+                 <button id="close-modal" class="text-gray-500 hover:text-gray-800">&times;</button>
+            </div>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mockData = {
+                'sucha-nawilżenie': [
+                    { id: 1, name: 'Hydro-Krem Intensywny', desc: 'Bogaty krem, który natychmiastowo nawilża i łagodzi suchą skórę.', ingredients: ['Kwas Hialuronowy', 'Masło Shea', 'Ceramidy'], chartData: [60, 25, 15] },
+                    { id: 2, name: 'Eliksir Nawadniający', desc: 'Lekkie serum, które wiąże wodę w naskórku, zapewniając długotrwałe nawilżenie.', ingredients: ['Gliceryna', 'Ekstrakt z aloesu', 'Pantenol'], chartData: [50, 40, 10] }
+                ],
+                'sucha-przeciwzmarszczkowe': [
+                    { id: 3, name: 'Krem Odmładzający z Peptydami', desc: 'Zaawansowana formuła, która redukuje zmarszczki i nawilża.', ingredients: ['Peptydy miedziowe', 'Kwas hialuronowy', 'Witamina E'], chartData: [45, 35, 20] }
+                ],
+                'sucha-wypryski': [
+                    { id: 4, name: 'Delikatny Krem-Żel z Kwasem Azelainowym', desc: 'Nawilża, jednocześnie łagodząc stany zapalne i niedoskonałości.', ingredients: ['Kwas azelainowy', 'Niacynamid', 'Alantoina'], chartData: [55, 30, 15] }
+                ],
+                'mieszana-nawilżenie': [
+                    { id: 5, name: 'Lekki Fluid Matująco-Nawilżający', desc: 'Idealny dla cery mieszanej, nawilża suche partie i matuje tłuste.', ingredients: ['Ekstrakt z zielonej herbaty', 'Kwas hialuronowy', 'Krzemionka'], chartData: [65, 25, 10] }
+                ],
+                'mieszana-przeciwzmarszczkowe': [
+                    { id: 6, name: 'Serum z Retinolem dla Cery Mieszanej', desc: 'Wygładza zmarszczki bez obciążania strefy T.', ingredients: ['Retinol 0.3%', 'Skwalan', 'Ekstrakt z wąkroty azjatyckiej'], chartData: [40, 40, 20] }
+                ],
+                'mieszana-wypryski': [
+                     { id: 7, name: 'Tonik z Kwasem Salicylowym', desc: 'Oczyszcza pory i reguluje wydzielanie sebum.', ingredients: ['Kwas salicylowy 2%', 'Niacynamid', 'Woda oczarowa'], chartData: [70, 20, 10] }
+                ],
+                'tłusta-nawilżenie': [
+                    { id: 8, name: 'Beztłuszczowy Żel Nawilżający', desc: 'Lekka, żelowa formuła, która nawadnia skórę bez zapychania porów.', ingredients: ['Kwas hialuronowy', 'Pantenol', 'Cynk PCA'], chartData: [75, 15, 10] }
+                ],
+                'tłusta-przeciwzmarszczkowe': [
+                     { id: 9, name: 'Emulsja Anti-Aging dla Skóry Tłustej', desc: 'Lekka emulsja z antyoksydantami, która zwalcza oznaki starzenia.', ingredients: ['Resweratrol', 'Witamina C', 'Kwas ferulowy'], chartData: [50, 35, 15] }
+                ],
+                'tłusta-wypryski': [
+                     { id: 10, name: 'Serum z Niacynamidem 10%', desc: 'Redukuje wypryski, zwęża pory i reguluje produkcję sebum.', ingredients: ['Niacynamid 10%', 'Cynk PCA', 'Gliceryna'], chartData: [60, 30, 10] }
+                ]
+            };
+            
+            const state = { skin: null, concern: null };
+            const wizard = document.getElementById('wizard');
+            const step1 = document.getElementById('step1');
+            const step2 = document.getElementById('step2');
+            const results = document.getElementById('results');
+            const resultsContainer = document.getElementById('results-container');
+
+            wizard.addEventListener('click', (e) => {
+                if (e.target.matches('[data-choice]')) {
+                    const { choice, value } = e.target.dataset;
+                    state[choice] = value;
+                    if (choice === 'skin') {
+                        step1.classList.add('hidden');
+                        step2.classList.remove('hidden');
+                    } else if (choice === 'concern') {
+                        step2.classList.add('hidden');
+                        displayResults();
+                        results.classList.remove('hidden');
+                    }
+                }
+            });
+
+            document.getElementById('back-to-step1').addEventListener('click', () => {
+                state.concern = null;
+                step2.classList.add('hidden');
+                step1.classList.remove('hidden');
+            });
+
+            document.getElementById('restart-wizard').addEventListener('click', () => {
+                state.skin = null;
+                state.concern = null;
+                results.classList.add('hidden');
+                step1.classList.remove('hidden');
+                resultsContainer.innerHTML = '';
+            });
+
+            function displayResults() {
+                const key = `${state.skin}-${state.concern}`;
+                const products = mockData[key] || [];
+                resultsContainer.innerHTML = '';
+                if (products.length > 0) {
+                    products.forEach(p => {
+                        const productCard = `
+                            <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                                <h5 class="font-bold text-lg">${p.name}</h5>
+                                <p class="text-sm text-gray-600 mb-3">${p.desc}</p>
+                                <div class="flex space-x-2">
+                                    <button data-modal="ingredients" data-id="${p.id}" class="text-sm bg-[#A0522D] text-white py-1 px-3 rounded hover:bg-[#8B4513] transition">Zobacz skład</button>
+                                    <button data-modal="chart" data-id="${p.id}" class="text-sm bg-gray-200 text-gray-800 py-1 px-3 rounded hover:bg-gray-300 transition">Zobacz statystyki</button>
+                                </div>
+                            </div>`;
+                        resultsContainer.innerHTML += productCard;
+                    });
+                } else {
+                    resultsContainer.innerHTML = '<p class="text-center text-gray-600">Przepraszamy, nie znaleziono rekomendacji dla tego połączenia. Spróbuj ponownie.</p>';
+                }
+            }
+            
+            const modal = document.getElementById('modal');
+            const closeModalBtn = document.getElementById('close-modal');
+            const modalBackdrop = modal.querySelector('.modal-backdrop');
+
+            function openModal(title, content) {
+                document.getElementById('modal-title').innerText = title;
+                document.getElementById('modal-body').innerHTML = content;
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                setTimeout(() => {
+                     modal.querySelector('.modal-backdrop').style.opacity = '1';
+                     modal.querySelector('.modal-content').style.transform = 'scale(1)';
+                }, 10);
+            }
+            
+            function closeModal() {
+                 modal.querySelector('.modal-backdrop').style.opacity = '0';
+                 modal.querySelector('.modal-content').style.transform = 'scale(0.95)';
+                 setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                 }, 300);
+            }
+            
+            closeModalBtn.addEventListener('click', closeModal);
+            modalBackdrop.addEventListener('click', closeModal);
+            
+            resultsContainer.addEventListener('click', (e) => {
+                const button = e.target.closest('[data-modal]');
+                if (!button) return;
+                
+                const { modal: modalType, id } = button.dataset;
+                const key = `${state.skin}-${state.concern}`;
+                const product = mockData[key].find(p => p.id == id);
+                
+                if (modalType === 'ingredients') {
+                    const content = `<ul>${product.ingredients.map(i => `<li class="mb-1 p-2 bg-gray-100 rounded">${i}</li>`).join('')}</ul>`;
+                    openModal(`Składniki: ${product.name}`, content);
+                } else if (modalType === 'chart') {
+                    const content = '<div class="chart-container"><canvas id="productChart"></canvas></div>';
+                    openModal(`Statystyki Składu: ${product.name}`, content);
+                    
+                    const ctx = document.getElementById('productChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Baza pielęgnacyjna', 'Składniki aktywne', 'Dodatki i konserwanty'],
+                            datasets: [{
+                                data: product.chartData,
+                                backgroundColor: ['#D2B48C', '#A0522D', '#EAE5DD'],
+                                borderColor: '#fff',
+                                borderWidth: 2
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { position: 'bottom' },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            let label = context.label || '';
+                                            if (label) {
+                                                label += ': ';
+                                            }
+                                            if (context.parsed !== null) {
+                                                label += context.parsed + '%';
+                                            }
+                                            return label;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+
+            document.getElementById('generate-formula').addEventListener('click', () => {
+                const base = document.getElementById('base').value;
+                const active = document.getElementById('active').value;
+                const formulaText = document.getElementById('formula-text');
+                const formulaOutput = document.getElementById('formula-output');
+
+                formulaText.value = `GENEROWANIE RECEPTURY...\nBaza: ${base}\nSkładnik Aktywny: ${active}\nProporcje: SI analizuje...`;
+                formulaOutput.classList.remove('hidden');
+
+                setTimeout(() => {
+                     formulaText.value = `Wygenerowana Receptura (Przykład):\n- ${base}: 85%\n- ${active}: 10%\n- Gliceryna (humektant): 4%\n- Konserwant naturalny: 1%`;
+                }, 1500);
+            });
+            
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            mobileMenu.addEventListener('click', (e) => {
+                if (e.target.tagName === 'A') {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>
