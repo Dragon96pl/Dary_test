@@ -92,7 +92,67 @@
             </div>
         </section>
 
-        </main>
+        <section id="ai-creator" class="py-16">
+            <div class="text-center mb-12">
+                 <h3 class="text-3xl font-bold text-[#6B5B4B] mb-2">Stwórz Własny Kosmetyk <span class="text-sm align-top bg-yellow-200 text-yellow-800 px-2 py-1 rounded-full">Beta</span></h3>
+                <p class="max-w-3xl mx-auto text-[#5C5855]">Ta sekcja pozwala Ci wypróbować naszą eksperymentalną funkcję opartą na Sztucznej Inteligencji. Możesz skomponować własną recepturę, wybierając bazę i składniki aktywne. Pamiętaj, że to narzędzie jest w fazie rozwoju i jego sugestie należy traktować z ostrożnością.</p>
+            </div>
+            <div class="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-md border border-[#EAE5DD]">
+                 <div class="grid md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="base" class="block mb-1 font-medium">Wybierz bazę:</label>
+                        <select id="base" class="w-full p-2 border rounded-lg">
+                            <option>Baza hialuronowa</option>
+                            <option>Baza aloesowa</option>
+                            <option>Baza lipidowa</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="active" class="block mb-1 font-medium">Wybierz składnik aktywny:</label>
+                        <select id="active" class="w-full p-2 border rounded-lg">
+                            <option>Witamina C</option>
+                            <option>Retinol</option>
+                            <option>Niacynamid</option>
+                        </select>
+                    </div>
+                </div>
+                <button id="generate-formula" class="w-full bg-[#A0522D] text-white font-bold py-3 px-8 rounded-lg hover:bg-[#8B4513] transition mb-4">Generuj Recepturę</button>
+                <div id="formula-output" class="hidden">
+                    <h5 class="font-semibold mb-2">Twoja wygenerowana receptura:</h5>
+                    <textarea id="formula-text" readonly class="w-full h-32 p-2 bg-gray-100 rounded-lg border"></textarea>
+                    <div class="mt-4 p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 rounded-r-lg">
+                        <h6 class="font-bold">Ważna uwaga!</h6>
+                        <p class="text-sm">Ta funkcja jest eksperymentalna i działa w oparciu o SI. Sugestie mogą zawierać błędy. Zawsze weryfikuj uzyskane informacje i zachowaj ostrożność.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="docker" class="py-16 bg-[#F8F4EF] -mx-6 px-6 rounded-xl">
+            <div class="text-center mb-12">
+                 <h3 class="text-3xl font-bold text-[#6B5B4B] mb-2">Uruchom Pełną Aplikację Lokalnie</h3>
+                 <p class="max-w-3xl mx-auto text-[#5C5855]">Chcesz skorzystać z pełnego potencjału naszego narzędzia? Aplikacja została przygotowana jako obraz Docker, co gwarantuje prostotę uruchomienia na dowolnym komputerze. W tej sekcji znajdziesz kompletne instrukcje, jak pobrać i uruchomić aplikację lokalnie.</p>
+            </div>
+            <div class="max-w-3xl mx-auto space-y-8">
+                <div>
+                    <h4 class="text-xl font-semibold mb-2 flex items-center"><span class="bg-[#A0522D] text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">1</span> Pobranie obrazu Docker</h4>
+                    <p class="mb-2 text-[#5C5855]">Upewnij się, że masz zainstalowany Docker, a następnie wykonaj poniższą komendę w terminalu.</p>
+                    <pre class="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto"><code>docker pull [nazwa_użytkownika]/[nazwa_repozytorium]:[tag]</code></pre>
+                </div>
+                 <div>
+                    <h4 class="text-xl font-semibold mb-2 flex items-center"><span class="bg-[#A0522D] text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">2</span> Uruchomienie kontenera</h4>
+                     <p class="mb-2 text-[#5C5855]">Po pobraniu obrazu, uruchom kontener. Aplikacja domyślnie będzie dostępna na porcie 80.</p>
+                    <pre class="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto"><code>docker run -p 80:80 [nazwa_użytkownika]/[nazwa_repozytorium]:[tag]</code></pre>
+                </div>
+                 <div>
+                    <h4 class="text-xl font-semibold mb-2 flex items-center"><span class="bg-[#A0522D] text-white rounded-full w-8 h-8 flex items-center justify-center mr-3">3</span> Otwarcie w przeglądarce</h4>
+                     <p class="mb-2 text-[#5C5855]">Otwórz przeglądarkę i przejdź pod adres, aby rozpocząć korzystanie z aplikacji.</p>
+                    <pre class="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto"><code>http://localhost</code></pre>
+                </div>
+            </div>
+        </section>
+
+    </main>
     
     <footer class="border-t border-[#EAE5DD] mt-16">
         <div class="container mx-auto px-6 py-6 text-center text-[#5C5855]">
@@ -111,6 +171,7 @@
         </div>
     </div>
     
+    <script src="database.js"></script>
     <script src="main.js"></script>
 </body>
 </html>
