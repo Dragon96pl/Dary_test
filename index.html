@@ -106,7 +106,28 @@
             
             <div id="wizard" class="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-md border border-[#EAE5DD]">
                 <div id="step1">
-                    <h4 class="text-2xl font-semibold text-center mb-6">Krok 1: Jaki jest Twój typ cery?</h4>
+                    <h4 class="text-2xl font-semibold text-center mb-6">Krok 1: Dla jakiej grupy wiekowej?</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <button data-choice="ageGroup" data-value="dorosły" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Dorosły</button>
+                        <button data-choice="ageGroup" data-value="dziecko" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Dziecko</button>
+                    </div>
+                </div>
+
+                <div id="step2" class="hidden">
+                    <h4 class="text-2xl font-semibold text-center mb-6">Krok 2: Do jakiej części ciała/rodzaju higieny?</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <button data-choice="bodyPart" data-value="ciało" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Ciało</button>
+                        <button data-choice="bodyPart" data-value="twarz" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Twarz</button>
+                        <button data-choice="bodyPart" data-value="higiena intymna" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Higiena Intymna</button>
+                        <button data-choice="bodyPart" data-value="higiena jamy ustnej" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Higiena Jamy Ustnej</button>
+                        <button data-choice="bodyPart" data-value="dłonie" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Dłonie</button>
+                        <button data-choice="bodyPart" data-value="włosy" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Włosy</button>
+                    </div>
+                     <button id="back-to-step1" class="mt-6 w-full text-center text-[#A0522D] hover:underline">Wróć</button>
+                </div>
+
+                <div id="step3" class="hidden">
+                    <h4 class="text-2xl font-semibold text-center mb-6">Krok 3: Jaki jest Twój typ cery?</h4>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <button data-choice="skinType" data-value="sucha" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Sucha</button>
                         <button data-choice="skinType" data-value="mieszana" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Mieszana</button>
@@ -114,18 +135,20 @@
                         <button data-choice="skinType" data-value="normalna" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Normalna</button>
                         <button data-choice="skinType" data-value="wrażliwa" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Wrażliwa</button>
                     </div>
+                     <button id="back-to-step2" class="mt-6 w-full text-center text-[#A0522D] hover:underline">Wróć</button>
                 </div>
 
-                <div id="step2" class="hidden">
-                    <h4 class="text-2xl font-semibold text-center mb-6">Krok 2: Jaki jest Twój główny cel pielęgnacyjny?</h4>
+                <div id="step4" class="hidden">
+                    <h4 class="text-2xl font-semibold text-center mb-6">Krok 4: Jaki jest Twój główny cel pielęgnacyjny?</h4>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <button data-choice="concern" data-value="nawilżenie" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Nawilżenie</button>
-                        <button data-choice="concern" data-value="przeciwzmarszczkowe" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Anti-Aging</button>
-                        <button data-choice="concern" data-value="wypryski" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Walka z wypryskami</button>
+                        <button data-choice="concern" data-value="anti-aging" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Anti-Aging</button>
+                        <button data-choice="concern" data-value="niedoskonałości" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Walka z niedoskonałościami</button>
                         <button data-choice="concern" data-value="łagodzenie" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Łagodzenie</button>
                         <button data-choice="concern" data-value="rozświetlenie" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Rozświetlenie</button>
+                        <button data-choice="concern" data-value="oczyszczanie" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Oczyszczanie</button>
                     </div>
-                     <button id="back-to-step1" class="mt-6 w-full text-center text-[#A0522D] hover:underline">Wróć</button>
+                     <button id="back-to-step3" class="mt-6 w-full text-center text-[#A0522D] hover:underline">Wróć</button>
                 </div>
 
                 <div id="results" class="hidden">
@@ -217,117 +240,317 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const productsData = [
-                {
-                    id: 1,
-                    name: 'Krem Nawilżający z Kwasem Hialuronowym',
-                    desc: 'Intensywnie nawilża, idealny dla cery suchej i normalnej, pozostawia skórę gładką i elastyczną.',
-                    ingredients: ['Kwas Hialuronowy', 'Gliceryna', 'Masło Shea', 'Ekstrakt z aloesu'],
-                    link: 'https://www.przykladowyproducent.pl/krem-nawilzajacy',
-                    skinType: ['sucha', 'normalna'],
-                    concern: ['nawilżenie', 'łagodzenie'],
-                    chartData: [55, 30, 15]
-                },
-                {
-                    id: 2,
-                    name: 'Serum Wygładzające z Retinolem',
-                    desc: 'Silne serum przeciwzmarszczkowe dla cery dojrzałej, redukuje drobne linie i poprawia jędrność.',
-                    ingredients: ['Retinol', 'Peptydy', 'Witamina E', 'Skwalan'],
-                    link: 'https://www.przykladowyproducent.pl/serum-retinolowe',
-                    skinType: ['normalna', 'mieszana', 'sucha'],
-                    concern: ['przeciwzmarszczkowe'],
-                    chartData: [40, 45, 15]
-                },
-                {
-                    id: 3,
-                    name: 'Żel Oczyszczający do Cery Tłustej i Mieszanej',
-                    desc: 'Delikatnie oczyszcza pory, redukuje nadmiar sebum i zapobiega wypryskom.',
-                    ingredients: ['Kwas Salicylowy', 'Niacynamid', 'Ekstrakt z zielonej herbaty'],
-                    link: 'https://www.przykladowyproducent.pl/zel-oczyszczajacy',
-                    skinType: ['tłusta', 'mieszana'],
-                    concern: ['wypryski', 'rozświetlenie'],
-                    chartData: [60, 25, 15]
-                },
-                {
-                    id: 4,
-                    name: 'Krem Łagodzący z Pantenolem',
-                    desc: 'Koi podrażnienia i zaczerwienienia, idealny dla cery wrażliwej i po zabiegach kosmetycznych.',
-                    ingredients: ['Pantenol', 'Alantoina', 'Ekstrakt z nagietka'],
-                    link: 'https://www.przykladowyproducent.pl/krem-lagodzacy',
-                    skinType: ['wrażliwa', 'sucha'],
-                    concern: ['łagodzenie', 'nawilżenie'],
-                    chartData: [65, 20, 15]
-                },
-                {
-                    id: 5,
-                    name: 'Serum Rozświetlające z Witaminą C',
-                    desc: 'Wyrównuje koloryt skóry, rozjaśnia przebarwienia i dodaje blasku.',
-                    ingredients: ['Witamina C', 'Kwas Ferulowy', 'Witamina E', 'Ekstrakt z lukrecji'],
-                    link: 'https://www.przykladowyproducent.pl/serum-witamina-c',
-                    skinType: ['normalna', 'mieszana'],
-                    concern: ['rozświetlenie', 'przeciwzmarszczkowe'],
-                    chartData: [50, 40, 10]
-                },
-                 {
-                    id: 6,
-                    name: 'Tonik Matujący do Cery Tłustej',
-                    desc: 'Zmniejsza widoczność porów i reguluje wydzielanie sebum, zapewniając długotrwały efekt matujący.',
-                    ingredients: ['Cynk PCA', 'Ekstrakt z wierzbownicy', 'Woda oczarowa'],
-                    link: 'https://www.przykladowyproducent.pl/tonik-matujacy',
-                    skinType: ['tłusta'],
-                    concern: ['wypryski'],
-                    chartData: [70, 20, 10]
-                },
-                 {
-                    id: 7,
-                    name: 'Krem pod Oczy Anti-Aging',
-                    desc: 'Zmniejsza cienie i opuchliznę pod oczami, wygładza drobne zmarszczki.',
-                    ingredients: ['Kofeina', 'Peptydy', 'Kwas hialuronowy'],
-                    link: 'https://www.przykladowyproducent.pl/krem-pod-oczy',
-                    skinType: ['sucha', 'normalna', 'wrażliwa'],
-                    concern: ['przeciwzmarszczkowe', 'rozświetlenie'],
-                    chartData: [45, 40, 15]
+            const cechyRaw = `Nazwa,Link,dorosły,dziecko,ciało,twarz,higiena intymna,higiena jamy ustnej,dłonie,włosy,oczyszczanie,wanna,prysznic,usuwanie martwego naskórka,odświeżenie,regulacja wydzielania sebum,objętość,łagodzenie podrażnień,odżywienie,nawilżenie,regeneracja,zmiękczenie,wygładzenie,wzmocnienie włosów,ukojenie,uelastycznienie,bezzapachowy,tonizacja,natłuszczenie,przeciw zmarszczkom,bóle mięśni i stawów,żylaki i obrzęki,wyrównanie kolorytu,antycellulitowe
+Szampon do włosów przetłuszczających się,https://jozka.pl/produkt/szampon-skora-przetluszczajaca-sie-250-ml-tatarak-kuklik/,1,0,0,0,0,0,0,1,1,1,x,x,x,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Szampon do włosów suchych i zniszczonych,https://jozka.pl/produkt/szampon-wlosy-suche-250-ml-slaz-dziewanna/,1,0,0,0,0,0,0,1,1,x,x,1,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0
+Szampon przeciwłupieżowy,https://jozka.pl/produkt/szampon-skora-wrazliwa-250-ml-bodziszek-brzoza/,1,0,0,0,0,0,0,1,1,x,x,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Peeling do stóp,https://jozka.pl/produkt/peeling-do-stop-90-ml/,1,0,1,0,0,0,0,0,1,x,x,1,1,0,x,0,1,0,1,0,0,x,1,0,0,0,0,0,0,0,0,0
+Hiipoalergiczne mydło w płynie,https://jozka.pl/produkt/hipoalergiczne-mydlo-w-plynie-500-ml-mydlnica-nagietek-slaz/,1,0,1,0,0,0,1,0,1,1,1,0,0,0,1,0,1,1,0,1,0,1,0,0,1,0,0,0,0,0,0,0
+Krem do stóp,https://jozka.pl/produkt/krem-do-stop-100-ml/,1,0,1,0,0,0,0,0,0,x,x,0,1,0,x,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+Odżywka do włosów przeciążonych/przetłuszczających się,https://jozka.pl/produkt/odzywka-wlosy-przeciazone-250-ml-tatarak-lisc-maliny/,1,0,0,0,0,0,0,1,0,x,x,1,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Odżywka do włosów suchych i zniszczonych,https://jozka.pl/produkt/odzywka-wlosy-suche-250-ml-slaz-werbena/,1,0,0,0,0,0,0,1,0,x,x,0,0,0,1,0,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0
+Odżywka do włosów z łupieżem/osłabionych,https://jozka.pl/produkt/odzywka-wlosy-oslabione-250-ml-macierzanka-brzoza/,1,0,0,0,0,0,0,1,0,x,x,0,1,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0
+Peeling do ciała,https://jozka.pl/produkt/peeling-do-ciala-250-ml-glog-dzika-roza-marchew/,1,0,1,0,0,0,0,0,1,x,x,1,0,0,0,0,1,0,1,1,x,0,1,0,0,0,0,0,0,0,1
+Delikatny balsam dla dzieci,https://jozka.pl/produkt/balsam-dla-dzieci-z-ochronnym-kompleksem-olejowym-300-ml/,0,1,1,0,0,0,0,0,0,x,x,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+Delikatny płyn do mycia ciała i włosków,https://jozka.pl/produkt/delikatny-plyn-do-mycia-ciala-i-wlosow-dla-dzieci-300-ml/,0,1,1,0,0,0,0,0,1,1,1,x,0,0,0,0,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0
+Łagodzący krem pieluszkowy,https://jozka.pl/produkt/lagodzacy-krem-pieluszkowy-z-kompleksem-olejowym-125-ml/,0,1,1,0,0,0,0,0,0,x,x,0,0,0,1,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0
+Masełko pielęgnujące dla dzieci,https://jozka.pl/produkt/pielegnujace-maselko-dla-dzieci-z-kompleksem-olejowym-90-ml/,0,1,1,0,0,0,0,0,0,x,x,0,0,0,1,1,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0
+Lekki krem do skóry tłustej i mieszanej,https://jozka.pl/produkt/lekki-krem-do-skory-tlustej-i-mieszanej-50-ml-uczep-krwisciag-lopian/,1,0,0,1,0,0,0,0,0,x,x,0,1,1,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0
+Peeling do twarzy,https://jozka.pl/produkt/peeling-do-twarzy-100-ml-rojnik-kwas-mlekowy-melisa/,1,0,0,1,0,0,0,0,1,x,x,1,0,0,0,0,0,1,1,x,0,0,0,0,0,0,0,0,0,0,0,0
+Płyn do higieny intymnej,https://jozka.pl/produkt/plyn-do-higieny-intymnej-200-ml-mydlnica-nagietek-melisa/,1,0,0,0,1,0,0,0,0,x,x,0,1,0,0,0,1,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0
+Płyn do płukania jamy ustnej,https://jozka.pl/produkt/plyn-do-plukania-jamy-ustnej-250-ml-zubrowka-szalwia-tymianek/,1,0,0,0,0,1,0,0,1,x,x,0,1,0,0,1,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+Olejek do kąpieli i pod prysznic dla dzieci,https://jozka.pl/produkt/olejek-do-kapieli-i-pod-prysznic-dla-dzieci-250-ml/,0,1,1,0,0,0,0,0,1,1,1,x,0,0,0,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+Płyn do kąpieli dla dzieci,https://jozka.pl/produkt/plyn-do-kapieli-dla-dzieci-250-ml/,0,1,1,0,0,0,0,0,1,1,0,x,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Zasypka z widłakiem dla dzieci,https://jozka.pl/produkt/zasypka-dla-dzieci-90-g-z-naturalnym-pylkiem-widlaka/,0,1,1,0,0,0,0,0,0,x,x,0,0,0,1,0,0,0,1,1,0,1,0,0,1,0,0,0,0,0,0,0
+Lekki krem do rąk,https://jozka.pl/produkt/krem-do-rak-100-ml/,1,0,0,0,0,0,1,0,0,x,x,0,0,0,1,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0
+Odżywczy krem do rąk,https://jozka.pl/produkt/krem-do-rak-100-ml-2/,1,0,0,0,0,0,1,0,0,x,x,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Płukanka octowa do włosów,https://jozka.pl/produkt/plukanka-octowa-100-ml/,1,0,0,0,0,0,0,1,0,x,x,0,0,0,0,0,1,0,0,1,1,0,1,0,0,0,0,0,0,0,0,0
+Mydło w płynie Bergamotka Trawa Cytrynowa,https://jozka.pl/produkt/ziolowe-mydlo-w-plynie-500-ml-bergamotka-trawa-cytrynowa/,1,0,1,0,0,0,1,0,1,x,x,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Mydło w płynie Lawenda Mięta Geranium,https://jozka.pl/produkt/ziolowe-mydlo-w-plynie-500-ml-lawenda-mieta-geranium/,1,0,1,0,0,0,1,0,1,x,x,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Żel pod prysznic Lawenda Magnolia,https://jozka.pl/produkt/ziolowy-zel-pod-prysznic-500-ml-lawenda-magnolia/,1,0,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Żel pod prysznic Jałowiec Grejpfrut Bazylia,https://jozka.pl/produkt/ziolowy-zel-pod-prysznic-500-ml-bazylia-grejpfrut-jalowiec/,1,0,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Esencja do kąpieli Energia,https://jozka.pl/produkt/ziolowa-esencja-do-kapieli-energia-500-ml/,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Esencja do kąpieli Relaks,https://jozka.pl/produkt/ziolowa-esencja-do-kapieli-relaks-500-ml/,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Olejek do demakijażu,https://jozka.pl/produkt/olejek-do-demakijazu-zel-do-mycia-twarzy/,1,0,0,1,0,0,0,0,1,x,x,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0
+Peeling do ust,https://jozka.pl/produkt/peeling-do-ust-15-ml/,1,0,0,1,0,0,0,0,1,x,x,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0
+Balsam do ust,https://jozka.pl/produkt/balsam-do-ust-15-ml/,1,0,0,1,0,0,0,0,0,x,x,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0
+Krem pod oczy,https://jozka.pl/produkt/krem-pod-oczy-15-ml/,1,0,0,1,0,0,0,0,0,x,x,0,0,0,1,1,1,0,1,1,0,0,1,1,0,0,1,0,0,0,0,0
+Żel do mycia twarzy,https://jozka.pl/produkt/zel-do-mycia-twarzy-200-ml/,1,0,0,1,0,0,0,0,1,x,x,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Krem przeciw zmarszczkom,https://jozka.pl/produkt/krem-przeciw-zmarszczkom-50-ml/,1,0,0,1,0,0,0,0,0,x,x,0,0,0,0,0,0,1,0,1,0,1,0,0,0,1,0,0,0,0,0,0
+Serum przeciw zmarszczkom,https://jozka.pl/produkt/serum-przeciw-zmarszczkom-30-ml/,1,0,0,1,0,0,0,0,0,x,x,0,0,0,0,0,0,1,0,1,0,1,0,0,0,1,0,0,0,0,0,0
+Tonik przeciw zmarszczkom,https://jozka.pl/produkt/tonik-przeciw-zmarszczkom-200-ml/,1,0,0,1,0,0,0,0,0,x,x,0,1,0,0,0,1,0,0,1,1,0,0,0,1,0,0,0,0,0,0,0
+Krem do cery suchej i zmęczonej,https://jozka.pl/produkt/krem-do-cery-suchej-i-zmeczonej-50-ml/,1,0,0,1,0,0,0,0,0,x,x,0,0,0,1,1,1,0,0,1,0,0,0,0,1,0,0,0,0,0,1
+Serum do cery suchej i zmęczonej,https://jozka.pl/produkt/serum-do-cery-suchej-i-zmeczonej-30-ml/,1,0,0,1,0,0,0,0,0,x,x,0,0,0,1,1,1,0,0,1,0,0,0,0,1,0,0,0,0,0,1
+Tonik do cery suchej i zmęczonej,https://jozka.pl/produkt/tonik-do-cery-suchej-i-zmeczonej-200-ml/,1,0,0,1,0,0,0,0,0,x,x,0,1,0,1,0,1,0,0,1,0,0,0,0,1,0,0,0,0,0,1
+Maść 7 ziół,https://jozka.pl/produkt/masc-7-ziol-90-ml/,1,0,1,0,0,0,0,0,0,x,x,0,0,0,0,0,1,0,0,0,0,0,1,0,1,0,1,0,0,0,0
+Maść nagietkowa,https://jozka.pl/produkt/masc-nagietkowa-90-ml/,1,0,1,1,0,0,0,0,0,x,x,0,0,0,1,1,1,0,0,1,0,1,0,0,1,0,0,0,0,0,0,0
+Stymulująca wcierka do skóry głowy,,1,0,0,0,0,0,0,1,1,x,x,0,0,0,0,1,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0
+Żel z żywokostem,https://jozka.pl/produkt/zel-z-zywokostem-250-ml/,1,0,1,0,0,0,0,0,0,x,x,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0
+Żel z arniką,https://jozka.pl/produkt/zel-z-arnika-i-kasztanowcem-250-ml/,1,0,1,0,0,0,0,0,0,x,x,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0
+Spray na mięśnie,https://jozka.pl/produkt/spray-na-miesnie-100-ml/,1,0,1,0,0,0,0,0,0,x,x,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0
+Mleczko do skóry o nierównym kolorycie,https://jozka.pl/produkt/mleczko-do-skory-o-nierownym-kolorycie-300-ml/,1,0,1,0,0,0,0,0,0,x,x,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0
+Koncentrat do stóp z rzepieniem,https://jozka.pl/produkt/koncentrat-do-stop-z-rzepieniem-300-ml/,1,0,1,0,0,0,0,0,1,x,x,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Mazidło ze złotym wąsem,https://jozka.pl/produkt/mazidlo-ze-zlotym-wasem-200-ml/,1,0,1,0,0,0,0,0,0,x,x,0,0,0,1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+Balsam do skóry suchej i wiotkiej,https://jozka.pl/produkt/balsam-do-skory-suchej-i-wiotkiej-200-ml/,1,0,1,0,0,0,0,0,0,x,x,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Balsam antycellulitowy,https://jozka.pl/produkt/balsam-antycellulitowy-200-ml/,1,0,1,0,0,0,0,0,0,x,x,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+Mydło różane,https://jozka.pl/produkt/mydlo-rozane-100-g/,1,0,1,0,0,0,1,0,1,x,x,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+Mydło nagietkowe,https://jozka.pl/produkt/mydlo-nagietkowe-100-g/,1,0,1,0,0,0,1,0,1,x,x,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0
+Mydło żołędziowe,https://jozka.pl/produkt/mydlo-zoledziowe-100-g/,1,0,1,0,0,0,1,0,1,x,x,0,0,1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0
+Hydrolat z płatków róży,https://jozka.pl/produkt/hydrolat-platki-rozy-150-ml/,1,0,0,1,0,0,0,0,0,x,x,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+Hydrolat z kwiatów lawendy,https://jozka.pl/produkt/hydrolat-kwiaty-lawendy-150-ml/,1,0,0,1,0,0,0,0,0,x,x,0,0,1,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+Hydrolat z liści werbeny,https://jozka.pl/produkt/hydrolat-liscie-werbeny-cytrynowej-150-ml/,1,0,0,1,0,0,0,0,0,x,x,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+Olej z nasion konopi,https://jozka.pl/produkt/olej-z-nasion-konopi-15-ml/,1,0,1,1,0,0,0,0,0,x,x,0,0,1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0
+Olej z nasion róży,https://jozka.pl/produkt/olej-z-nasion-dzikiej-rozy-15-ml/,1,0,1,1,0,0,0,0,0,x,x,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0
+Olej z nasion wiesiołka,https://jozka.pl/produkt/olej-z-nasion-wiesiolka-15-ml/,1,0,1,1,0,0,0,0,0,x,x,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
+`;
+
+            const zioloOgrodRaw = `Nazwa produktu,Opakowanie,Składniki/ Ingredients:,Sposób użycia,% pochodzenia naturalnego,Objętość,rozmiar etykiety (wys x szer),Przód opakowania,Tył opakowania,Kluczowe składniki,Opis produktu,Opis surowców,Producent,Kraj pochodzenia,Termometr,Data ważności + PAO 6msc,data ważności (info dla nas)
+Maść 7 Ziół,słoik,"Cannabis Sativa Seed Oil, Linum Usitassimum Seed Oil, Cera Alba, Nigella Sativa Seed Oil, Butyrospermum Parkii Butter, Theobroma Cacao Seed Butter, Lanolin, Alca Rosea Nigra Extract, Alchemilla Vulgaris Extract, Angelica Archangelica Root Extract, Comarum Palustre Root Extract, Equisetum Arvense Extract, Filipendula Ulmaria Extract, Galium Aparine Extract, Tocopherol, Helianthus Annuus Seed Oil, Aqua, Benzyl Alcohol, Dehydroacetic Acid",Nałóż na wymagające obszary skóry, wmasuj do wchłonięcia.,95,50 ml 90ml,"Nazwa firmy, % poch. Nat., nazwa produktu, kluczowe składniki",Opis produktu, opis surowców, skład, sposób użycia, strona www, producent, termometr, data ważności 9 msc od daty produkcji, PAO 6 msc, znaczek Podlasie (?)siedmiopalecznik, skrzyp, malwa czarna, wiązówka błotna, arcydzięgiel, przywrotnik, przytulia,"Maść na bazie maceratu z naturalnych olejów i 7 polskich ziół. Intensywna, a zarazem delikatna, polecana jest do pielęgnacji nawet najbardziej wrażliwej skóry.",Wyciąg Siedmiopalecznik - wykazuje działanie łagodzące, ściągające, przeciwzapalne.
+Wyciąg Przytulia - działa przeciwzapalnie i antyoksydacyjnie.
+Wyciąg Malwa czarna - działa kojąco, regeneruje i chroni skórę.
+Olej z czarnuszki - działa przeciwbakteryjnie, przeciwzapalnie, przyspiesza regenerację naskórka.,Dary Natury Sp. z o.o. Koryciny 73 17-315 Grodzisk,Kraj pochodzenia: Polska,16-25,Najlepiej zużyć przed końcem: data i numer serii na opakowaniu.,rok od daty produkcji
+Mazidło ze Złotym Wąsem,słoik,"Aqua, Canola Oil, Glycerin, Cetearyl Glucoside, Camelina Sativa Seed Oil, Callisia Fragrans Leaf Juice, Galinsoga Parviflora Herb Juice, Theobroma Cacao Seed Butter, Cetearyl Alcohol, Sorbitan Olivate, Glyceryl Stearate, Benzyl Alcohol, Tocopherol, Symphytum Officinale Root Extract, Equisetum Arvense Extract, Polygonum Aviculare Herb Extract, Xanthium Strumarium Leaf Extract, Helianthus Annuus Seed Oil, Citric Acid, Xanthan Gum, Dehydroacetic Acid, Sodium Benzoate, Potassium Sorbate, Sodium Hydroxide, Parfum, Benzyl Benzoate, Benzyl Salicylate, Citronellol, Coumarin, Hexyl Cinnamal, Linalool.",Nałóż na wymagające obszary skóry, wmasuj do wchłonięcia.,95,200 ml,"Nazwa firmy, % poch. Nat., nazwa produktu",Opis produktu, opis surowców, skład, sposób użycia, strona www, producent, termometr, Data ważności 12 msc od daty produkcji, PAO 6 msc, znaczek Podlasie (?)Intensywny, bogaty w naturalne składniki aktywne krem, delikatnie otuli skórę mocą cennych ziół i roślinnych olejów. Doskonale sprawdzi się w pielęgnacji skóry całego ciała.
+Sok Złoty wąs - bogaty we flawonoidy, działa silnie antyoksydacyjnie i przeciwzapalnie, regeneruje naskórek, przyspiesza gojenie.
+Sok Żółtlica - działa przeciwbakteryjnie i antyoksydacyjnie, przyspiesza gojenie skóry.
+Ex Żywokost - wykazuje silne działanie przeciwzapalne, łagodzi i zmniejsza podrażnienia.
+Ex Rdest - działa przeciwutleniająco, zmniejsza stany zapalne skóry, regeneruje.,Dary Natury Sp. z o.o. Koryciny 73 17-315 Grodzisk,Kraj pochodzenia: Polska,16-25,Najlepiej zużyć przed końcem: data i numer serii na opakowaniu.,dwa lata od daty produkcji
+Mleczko do skóry o nierównym kolorycie,butelka z pompką,"Lemna Minor Juice, Glycerin, Aqua, Theobroma Cacao Seed Butter, Canola Oil, Linum Usitatissimum Seed Oil, Citrus Limon Juice, Cetearyl Alcohol, Glyceryl Stearate, Camelina Sativa Seed Oil, Hippophae Rhamnoides Oil, Stearic Acid, Sodium Lauroyl Glutamate, Panthenol, Sorbitol, Angelica Archangelica Root Extract, Geranium Pratense Extract, Polygonatum Multiflorum Root Extract, Helianthus Annuus Seed Oil, Xanthan Gum, Tocopherol, Parfum, Citric Acid, Benzyl Alcohol, Dehydroacetic Acid, Sodium Benzoate, Potassium Sorbate, Alpha-Isomethyl Ionone, Cinnamyl Alcohol, Citronellol, Eugenol, Geraniol, Hexyl Cinnamal, Limonene, Linalool.",Mleczko dokładnie wmasuj w skórę i pozostaw do wchłonięcia.,97,300 ml,"Nazwa firmy, % poch. Nat., nazwa produktu",Opis produktu, opis surowców, skład, sposób użycia, strona www, producent, termometr, data ważności 12 msc od daty produkcji, PAO 6 msc, znaczek Podlasie (?)Mleczko do ciała na bazie roślinnych składników aktywnych, polecane szczególnie do skóry dojrzałej, z widocznymi przebarwieniami związanymi z wiekiem oraz wymagającej delikatnego i naturalnego wyrównania kolorytu.Olej z rokitnika - intensywnie wspomaga procesy regeneracyjne naskórka i silnie odżywia.
+Ex Arcydzięgiel - zawiera wysoką ilość antyoksydantów.
+Sok Kokoryczka - dzięki wysokiej zawartości składników aktywnych działa rozjaśniająco i przeciwdrobnoustrojowo.
+Sok z rzęsy wodnej - silnie wygładza, nawilża i regeneruje skórę oraz wyrównuje jej koloryt.,Dary Natury Sp. z o.o. Koryciny 73 17-315 Grodzisk,Kraj pochodzenia: Polska,16-25,Najlepiej zużyć przed końcem: data i numer serii na opakowaniu.,dwa lata od daty produkcji
+Koncentrat do stóp z rzepieniem,butelka z pompką,"Aqua, Glycerin, Quercus Robur Fruit Extract, Cocamidopropyl Betaine, Xanthium Strumarium Leaf Extract, Cetraria Islandica Extract, Chelidonium Majus Extract, Cymbopogon Nardus Oil, Pinus Sylvestris Leaf Oil, Xanthan Gum, Citric Acid, Sodium Chloride, Sodium Hydroxide, Benzyl Alcohol, Dehydroacetic Acid, Sodium Benzoate, Potassium Sorbate, Citronellol, Geraniol, Limonene.",3 pompki produktu dodaj do miski z wodą, wymocz stopy, spłucz.,95,300 ml,"Nazwa firmy, % poch. Nat., nazwa produktu",Opis produktu, opis surowców, skład, sposób użycia, strona www, producent, termometr, słoik 6 mc, data ważności, znaczek Podlasie (?), info: 80% naturalnych ekstraktówBogaty w ziołowe składniki aktywne koncentrat do kąpieli stóp obolałych, zmęczonych, z tendencją do podrażnień i problemów grzybiczych.Ex Rzepień - zawiera dużą ilość garbników, wykazujących działanie antyseptyczne i ściągające.
+Ex Żołędzie - skoncentrowany ekstrakt hamuje rozwój bakterii.
+Ex Glistnik - dzięki zawartości alkaloidów wykazuje właściwości przeciwdrobnoustrojowe.
+Sosna - sosnowy olejek eteryczny nadaje odświeżający, energetyzujacy zapach.,Dary Natury Sp. z o.o. Koryciny 73 17-315 Grodzisk,Kraj pochodzenia: Polska,16-25,Najlepiej zużyć przed końcem: data i numer serii na opakowaniu.,dwa lata od daty produkcji
+Balsam do pielęgnacji skóry suchej i wiotkiej,słoik,"Aqua, Glycerin, Canola Oil, Glycine Soja Oil, Cetearyl Glucoside, Butyrospermum Parkii Butter, Cetearyl Alcohol, Sorbitan Olivate, Camelina Sativa Seed Oil, Glyceryl Stearate, Panthenol, Sorbitol, Calendula Officinalis Flower Extract, Comarum Palustre Extract, Equisetum Arvense Extract, Polygonum Aviculare Herb Extract, Symphytum Officinale Root Extract, Tocopherol, Helianthus Annuus Seed Oil, Silica, Xanthan Gum, Parfum, Citric Acid, Benzyl Alcohol, Dehydroacetic Acid, Potassium Sorbate, Sodium Benzoate, Sodium Hydroxide, Alpha-Isomethyl Ionone, Citral, Citronellol, Coumarin, Eugenol, Linalool.",Balsam wmasuj w skórę do wchłonięcia.,98,200 ml,"Nazwa firmy, % poch. Nat., nazwa produktu, 60+",Opis produktu, opis surowców, skład, sposób użycia, strona www, producent, termometr, data ważności 12 msc od daty produkcji, PAO 6 msc, znaczek Podlasie (?)Delikatny balsam stworzony na bazie naturalnych olejów roślinnych. Polecany szczególnie do pielęgnacji mocno przesuszonej i podrażnionej skóry osób dojrzałych i starszych.Ex Żywokost - wykazuje silne działanie przeciwzapalne, łagodzi i zmniejsza podrażnienia.
+Ex Skrzyp - ma właściwości kojące, łagodzące, przyspiesza gojenie podrażnień i otarć.
+Ex Siedmiopalecznik - wykazuje działanie łagodzące, ściągające, przeciwzapalne.
+Ex Nagietek - regeneruje i koi skórę, wykazuje działanie antyoksydacyjne.,Dary Natury Sp. z o.o. Koryciny 73 17-315 Grodzisk,Kraj pochodzenia: Polska,16-25,Najlepiej zużyć przed końcem: data i numer serii na opakowaniu.,dwa lata od daty produkcji
+Wcierka stymulująca,butelka z aplikatorem,"Aqua, Glycerin, Alcohol, Propanediol, Zingiber Officinale (Ginger) Root Juice, Raphanus Sativus (Radish) Root Juice, Polysorbate 20, Acorus Calamus Rhizome Extract, Arctium Lappa Root Extract, Equisetum Arvense Extract, Trigonella Foenum-Graecum Seed Extract, Urtica Dioica Leaf Extract, Chaenomeles Japonica Fruit Juice, Ganoderma Lucidum Ferment Filtrate, Benzyl Alcohol, Citric Acid, Sodium Benzoate, Potassium Sorbate, Sodium Hydroxide, Dehydroacetic Acid",Produkt rozprowadź równomiernie na skórze głowy, wmasuj opuszkami palców, nie spłukuj. Przed użyciem wstrząśnij.,97,150 ml,"Nazwa firmy, % poch. Nat., nazwa produktu",Opis produktu, opis surowców, skład, sposób użycia, strona www, producent, termometr, data ważności 12 msc od daty produkcji, PAO 6 msc, znaczek Podlasie (?)Intensywna w działaniu wcierka na bazie naturalnych ekstraktów ziołowych. Polecana do regularnego stosowania, szczególnie w przypadku osłabionej skóry głowy i włosów.Ex Kozieradka - pobudza i przyspiesza wzrost włosów.
+Ex Skrzyp - wzmacnia cebulki włosów i przyspiesza wzrost.
+Sok Czarna rzodkiew - regeneruje i pobudza wzrost włosów.
+Sok Imbir - wykazuje działanie przeciwzapalne i antyoksydacyjne.,Dary Natury Sp. z o.o. Koryciny 73 17-315 Grodzisk,Kraj pochodzenia: Polska,16-25,Najlepiej zużyć przed końcem: data i numer serii na opakowaniu.,trzy lata od daty produkcji
+Żel z żywokostem,Tuba,"Aqua, Glycerin, Propanediol, Alcohol, Symphytum Officinale Root Extract, Xanthan Gum, Comarum Palustre Extract, Filipendula Ulmaria Extract, Menthyl Nicotinate, Menthol, Citric Acid, Sodium Benzoate, Potassium Sorbate, Sodium Hydroxide.",Dokładnie wmasuj w skórę wybranych partii ciała i pozostaw do wchłonięcia. Stosuj w zależności od potrzeb, do kilku razy dziennie.,97,250 ml,"14,5 x 15 cmNazwa firmy, % poch. Nat., nazwa produktu",Opis produktu, opis surowców, skład, sposób użycia, strona www, producent, termometr, data ważności 12 msc od daty produkcji, PAO 6 msc, znaczek Podlasie (?)Naturalny żel stworzony na bazie ekstraktów roślinnych, w tym skoncentrowanego wyciągu z żywokostu. Polecany do masażu zmęczonych i spiętych mięśni, pielęgnacji ciała po intensywnym wysiłku fizycznym oraz urazach. Dodatek substancji aktywnej Nicoment® nadaje efekt tzw. chłodnego ciepła, zwiększa krążenie podskórne oraz przenikanie cennych składników żelu. Lekka konsystencja oraz orzeźwiający, miętowy zapach sprawiają, że aplikacja produktu jest przyjemna, a ciało po masażu zrelaksowane.
+Uwaga: Unikać kontaktu z oczami. Nie stosować na rany oraz podrażniony naskórek.
+Zawiera ponad 80% ekstraktów roślinnych.
+Ex Żywokost - wykazuje silne działanie przeciwzapalne, łagodzi i zmniejsza podrażnienia.
+Ex Siedmiopalecznik - wykazuje działanie łagodzące, ściągające, przeciwzapalne.
+Ex Wiązówka - działa antyoksydacyjnie i przeciwzapalnie.
+Nicoment® - zwiększa mikrocyrkulację skóry, rozszerza naczynia krwionośne i daje uczucie chłodzenia.,Dary Natury Sp. z o.o. Koryciny 73 17-315 Grodzisk,Kraj pochodzenia: Polska,16-25,Najlepiej zużyć przed końcem: data i numer serii na opakowaniu.,dwa lata od daty produkcji
+Zasypka z widłakiem,słoik,"Potato Starch, Quercus Robur Extract, Lycopodium Clavatum Exine, Allantoin, Zinc Oxide, Silica, Pinus Sylvestris Leaf Oil",Miejsca podrażnione lub narażone na podrażnienia pokryj cienką warstwą zasypki. Stosuj na oczyszczoną i dokładnie osuszoną skórę.,99,90g,"Nazwa firmy, % poch. Nat., nazwa produktu",Opis produktu, opis surowców, skład, sposób użycia, strona www, producent, termometr, data ważności , PAO 6 msc, znaczek Podlasie (?)widłak (zarodniki), ekstrakt z żołędzi, alantoina, krzemionka, olejek eteryczny sosna,Naturalna zasypka do ciała, stworzona na bazie pyłku z widłaka goździstego. Delikatnie otuli skórę kojąc ją i zabezpieczając przed podrażnieniami. Polecana do codziennej pielęgnacji skóry narażonej na otarcia i odparzenia.
+Jeśli się zmieści:
+Zawiera % naturalnego pyłku z widłaka
+(Pyłek z widłaka) Widłak - koi podrażnienia i zabezpiecza naskórek.
+(Ekstrakt z żołędzi) Żołędzie - w skoncentrowanej formie hamuje rozwój bakterii.
+Alantoina - nawilża, łagodzi i wspomaga regenerację skóry.
+Krzemionka - pochłania nadmiar wilgoci i tworzy warstwę ochronną.
+(Sosnowy olejek eteryczny) Sosna - wykazuje działanie przeciwdrobnoustrojowe.,Dary Natury Sp. z o.o. Koryciny 73 17-315 Grodzisk,Kraj pochodzenia: Polska,16-25,Najlepiej zużyć przed końcem: data i numer serii na opakowaniu.,trzy lata od daty produkcji
+Maść nagietkowa,słoik,"Aqua, Butyrospermum Parkii Butter, Canola Oil, Cetearyl Alcohol, Glyceryl Stearate, Glycerin, Lanolin, Stearic Acid, Calendula Officinalis Flower Extract, Sodium Lauroyl Glutamate, Tocopherol, Helianthus Annuus Seed Oil, Xanthan Gum, Citric Acid, Benzyl Alcohol, Dehydroacetic Acid, Potassium Sorbate, Sodium Benzoate, Parfum, Alpha-Isomethyl Ionone, Benzyl Salicylate, Geraniol, Hexyl Cinnamal, Hydroxycitronellal, Linalool",Cienką warstwę maści rozprowadź równomiernie na skórze, a następnie delikatnie wetrzyj. Stosuj w zależności od potrzeb, do kilku razy dziennie.,98,90 ml,"Nazwa firmy, % poch. Nat., nazwa produktu",Opis produktu, opis surowców, skład, sposób użycia, strona www, producent, termometr, data ważności , PAO 6 msc, znaczek Podlasie (?)ekstrakt z nagietka, macerat z nagietka, masło shea, lanolina,Naturalna maść na bazie ekstraktu i maceratu z kwiatów nagietka lekarskiego. Polecana do stosowania w przypadku przesuszenia, drobnych uszkodzeń i stanów zapalnych skóry.Nagietek - wspomaga regenerację, zmniejsza zaczerwienienia, koi i nawilża.
+Masło shea - chroni przed nadmierną utratą wody, zmiękcza i łagodzi podrażnienia.
+Lanolina - wygładza, zmiękcza, uelastycznia i tworzy na skórze ochronną warstwę.,Dary Natury Sp. z o.o. Koryciny 73 17-315 Grodzisk,Kraj pochodzenia: Polska,16-25,Najlepiej zużyć przed końcem: data i numer serii na opakowaniu.,2 lata od daty produkcji
+Żel z arniką i kasztanowcem,tuba,"Aqua, Glycerin, Hierochloe Odorata Leaf Water, Sorbitol, Xanthan Gum, Aesculus Hippocastanum Bark Extract, Arnica Montana Flower Extract, Galium Odoratum Extract, Melilotus Officinalis Herb Extract, Citric Acid, Sodium Benzoate, Potassium Sorbate, Sodium Hydroxide",Niewielką ilość żelu dokładnie wmasuj w skórę i pozostaw do wchłonięcia. Stosuj w zależności od potrzeb, do kilku razy dziennie.,97,250 ml,"Nazwa firmy, % poch. Nat., nazwa produktu",Opis produktu, opis surowców, skład, sposób użycia, strona www, producent, termometr, data ważności , PAO 6 msc, znaczek Podlasie (?)ex arnika (31%), ex kasztanowiec (30%), ex marzanka, ex nostrzyk, hydrolat żubrówka - łącznie 86% ex i 8% hydrolatu~formulacyjnie podobny do tego z żywokostem - działanie na zmęczone nogi, opuchnięte, problemy z żylakami itp
+Żel na bazie naturalnych ekstraktów ziołowych, polecany do masażu zmęczonych i opuchniętych nóg, a także skóry dojrzałej z problemami naczynkowymi oraz żylakami.
+Arnika - uelastycznia, nawilża, wspomaga prawidłowe krążenie.
+Kasztanowiec - chroni skórę przed niekorzystnymi czynnikami zewnętrznymi, usprawnia krążenie.
+Marzanka - wykazuje działanie łagodzące podrażnienia.
+Nostrzyk - wykazuje działanie łagodzące oraz wpływa pozytywnie na kondycję żył.
+Żubrówka - odpręża i odświeża pięknym aromatem.,Dary Natury Sp. z o.o. Koryciny 73 17-315 Grodzisk,Kraj pochodzenia: Polska,16-25,Najlepiej zużyć przed końcem: data i numer serii na opakowaniu.,dwa lata od daty produkcji
+Balsam antycellulitowy,słoik 200ml,"Aqua, Fagopyrum Esculentum Juice, Theobroma Cacao Seed Butter, Canola Oil, Caprylic/Capric Triglyceride, Glycerin, Cetearyl Alcohol, Glyceryl Stearate, Uritica Dioica Seed Oil, Stearic Acid, Sodium Lauroyl Glutamate, Cetyl Alcohol, Polyglyceryl – 3 PCA, Panthenol, Sorbitol, Angelica Palustris Extract, Artemisia Absinthium Extract, Cochlearia Armoracia Root Extract, Coffea Arabica Seed Extract, Cyclanthera Pedata Extract, Equisetum Arvense Leaf Extract, Carnitine Fumarate, Menthyl Nicotinate, Tocopherol, Benzyl Alcohol, Citrus Aurantium Dulcis Peel Oil, Helianthus Annuus Seed Oil, Dehydroacetic Acid, Sodium Pyruvate, Succinic Acid, Xanthan Gum, Citric Acid, Sodium Benzoate, Potassium Sorbate, Menthol, D-Limonene",Porcję balsamu wmasuj okrężnymi ruchami w miejsca narażone na powstawanie cellulitu. Stosuj regularnie, dwa razy dziennie, najlepiej rano i wieczorem.,97,200 ml,"Nazwa firmy, % poch. Nat., nazwa produktu",Opis produktu, opis surowców, skład, sposób użycia, strona www, producent, termometr, data ważności , PAO 6 msc, znaczek Podlasie (?)ex starodub, ex cyklantera stopowa, ex bylica piołun, ex kawa arabia, ex chrzan, sok gryka (25%), nicoment, carnoxyn,Naturalny balsam do ciała na bazie ziołowych składników aktywnych, polecany szczególnie do pielęgnacji skóry pozbawionej jędrności oraz z tzw. efektem skórki pomarańczowej.
+Ze względu na wysoką zawartość składników organicznych partie mogą różnić się nieznacznie kolorem.
+Gryka - zawiera rutynę o działaniu antyoksydacyjnym, zwiększającym gęstość i elastyczność skóry.
+Kawa - ujędrnia, ujednolica koloryt, poprawia krążenie.
+Pokrzywa - uelastycznia, odżywia i regeneruje skórę.
+Carnoxyn® - wykazuje działanie wyszczuplające, antycellulitowe i ujędrniające.,Dary Natury Sp. z o.o. Koryciny 73 17-315 Grodzisk,Kraj pochodzenia: Polska,16-25,Najlepiej zużyć przed końcem: data i numer serii na opakowaniu.,dwa lata od daty produkcji
+Balsam aromaterapeutyczny*,słoik 90 ml,"Prunus Amygdalus Dulcis Oil, Cera Alba, Cocos Nucifera Oil, Butyrospermum Parkii Butter, Eucalyptus Globulus Oil, Mentha Piperita Oil, Pinus Sylvestris Oil, Tocopherol, Citrus Paradisi Peel Oil, Juniperus Virginiana Oil, Origanum Vulgare Oil, Rosmarinus Officinalis Leaf Oil, Thymus Vulgaris Oil, Helianthus Annuus Seed Oil, Eugenol, Limonene, Linalool",Niewielką ilość balsamu rozgrzej w dłoniach, a następnie wmasuj dokładnie w skórę klatki piersiowej i pleców. Możesz zastosować ją również na skórze wokół nosa oraz na skroniach.,100,70 ml (!)"Nazwa firmy, % poch. Nat., nazwa produktu",Opis produktu, opis surowców, skład, sposób użycia, strona www, producent, termometr, data ważności , PAO 6 msc, znaczek Podlasie (?)cedr, sosna, rozmaryn, tymianek,Ziołowy balsam stworzony na bazie naturalnych składników, m.in. oleju migdałowego, wosku pszczelego, masła shea oraz autorskiej kompozycji olejków eterycznych. Polecany, jako wsparcie dróg oddechowych w przebiegu sezonowych infekcji oraz niedrożności nosa.
+*Z przodu pod nazwą informacja:
+Sezonowe infekcje, katar
+Olejek cedrowy - rozrzedza wydzielinę oskrzelową, umożliwiając jej odkrztuszanie.
+Olejek sosnowy - wykazuje działanie antyseptyczne i rozkurczowe.
+Olejek rozmarynowy - ułatwia oddychanie w przebiegu infekcji dróg oddechowych.
+Olejek tymiankowy - daje uczucie ulgi podczas kataru i kaszlu.,Dary Natury Sp. z o.o. Koryciny 73 17-315 Grodzisk,Kraj pochodzenia: Polska,16-25,Najlepiej zużyć przed końcem: data i numer serii na opakowaniu.,dwa lata od daty produkcji
+Spray na mięśnie*,butelka plastikowa 100 ml z atomizerem,"Aqua, Alcohol, Menthol, Rosmarinus Officinalis Leaf Oil, Cinnamonum Zeylanic Leaf Oil, Citrus Grandis Peel Oil, Citrus Limon Peel Oil, Coriandrum Sativum Fruit Oil, Eugenia Caryophyllus Bud Oil, Mentha Piperita Oil, Myristica Frargrans Kernel Oil, Origanum Vulgare Leaf Oil, Thymus Vulgaris Leaf Oil, Ethylhexylglycerin, Phenoxyethanol, Benzyl Benzoate, Cinnamal, Cinnamyl Alcohol, Citral, Eugenol, Geraniol, Isoeugenol, Limonene, Linalool",Produkt rozpyl w miejscu, w którym odczuwasz dyskomfort, a następnie delikatnie wmasuj. Czynność powtarzaj do kilku razy dziennie.,99,100 ml,"Nazwa firmy, % poch. Nat., nazwa produktu",Opis produktu, opis surowców, skład, sposób użycia, strona www, producent, termometr, data ważności , PAO 6 msc, znaczek Podlasie (?)cynamon, mięta, rozmaryn,Ziołowy spray skomponowany na bazie naturalnych olejków eterycznych. Daje uczucie intensywnego rozgrzewania i odprężenia obolałych i spiętych partii ciała. Polecany szczególnie po treningu fizycznym, przy napięciach mięśni związanych ze stresem oraz kontuzjami.
+*Z przodu pod nazwą informacja:
+Rozgrzanie i odprężenie obolałych partii ciała
+olejek cynamonowy - wykazuje działanie przeciwzapalne i rozgrzewa.
+olejek miętowy - działa przeciwbólowo i rozkurczowo.
+olejek rozmarynowy - relaksuje i poprawia ukrwienie.,Dary Natury Sp. z o.o. Koryciny 73 17-315 Grodzisk,Kraj pochodzenia: Polska,16-25,Najlepiej zużyć przed końcem: data i numer serii na opakowaniu.,dwa lata od daty produkcji
+Propolisowy kompress,słoik 90 ml,"Aqua, Propanediol, Glycerin, Hydroxypropyl Starch Phosphate, Citric Acid, Propolis Extract, Xanthan Gum, Sodium Hydroxide, Sodium Benzoate, Potassium Sorbate",Niewielką ilość produktu rozprowadź na wybranej partii ciała. Można stosowac również na skórę twarzy.,98.00%,90 ml,"jak maść nagietkowa, 7 ziółNazwa firmy, % poch. Nat., nazwa produktu",Opis produktu, opis surowców, skład, sposób użycia, strona www, producent, termometr, data ważności , PAO 6 msc, znaczek Podlasie (?)propolis,Zawiera 30% ekstraktu z propolisuPropolis to cenny składnik, który pszczoły wytwarzają do ochrony ula. W kosmetykach ceniony jest za swoje właściwości pielęgnacyjne – wspiera naturalną barierę ochronną skóry i pomaga zachować jej dobrą kondycję. Ceniony za działanie kojące oraz wspierające naturalne procesy odnowy naskórka.,Dary Natury Sp. z o.o. Koryciny 73 17-315 Grodzisk,Kraj pochodzenia: Polska,16-25,Najlepiej zużyć przed końcem: data i numer serii na opakowaniu.,dwa lata od daty produkcji
+Kąpiel owsiana,butelka 300 ml,"Aqua, Prunus Amygdalus Dulcis Oil, Avena Sativa Meal Extract, Laureth-3, MIPA-Laureth Sufate, Glycerin, Sorbitol, Citric Acid, Laureth-7 Citrate, Panthenol, Linum Usitatissimum Seed Extract, Tocopherol, Helianthus Annuus Seed Oil, Sodium Benzoate, Potassium Sorbate, Sodium Hydroxide, Benzyl Alcohol, Dehydroacetid Acid",Przed użyciem dokładnie wstrząśnij! Dowolną ilość produktu dodaj do wanny z wodą.,300 ml,"jak koncentrat do stópNazwa firmy, % poch. Nat., nazwa produktu",Opis produktu, opis surowców, skład, sposób użycia, strona www, producent, termometr, data ważności , PAO 6 msc, znaczek Podlasie (?)owies, pantenol, ekstrakt z lnu, olej migdałowy (?),Ponad 60% mleczka owsianegoOwies - koi, łagodzi stany zapalne, pozytywnie wpływa na zmniejszenie uszkodzeń bariery ochronnej skóry. Polecany w pielęgnacji skóry atopowej, wrażliwej, a także dla dzieci.
+Pantenol - regeneruje, łagodzi i nawilża skórę.
+Ekstrakt z lnu - koi i nawilża skórę.,Dary Natury Sp. z o.o. Koryciny 73 17-315 Grodzisk,Kraj pochodzenia: Polska,16-25,Najlepiej zużyć przed końcem: data i numer serii na opakowaniu.,dwa lata od daty produkcji
+`;
+
+            const parseCsv = (csvString, headersRowIndex) => {
+                const lines = csvString.trim().split('\n');
+                const headers = lines[headersRowIndex].split(',').map(h => h.trim().replace(/"/g, ''));
+                const dataRows = lines.slice(headersRowIndex + 1);
+
+                return dataRows.map(row => {
+                    const values = [];
+                    let inQuote = false;
+                    let currentVal = '';
+                    for (let i = 0; i < row.length; i++) {
+                        const char = row[i];
+                        if (char === '"') {
+                            inQuote = !inQuote;
+                        } else if (char === ',' && !inQuote) {
+                            values.push(currentVal.trim().replace(/"/g, ''));
+                            currentVal = '';
+                        } else {
+                            currentVal += char;
+                        }
+                    }
+                    values.push(currentVal.trim().replace(/"/g, ''));
+
+                    let product = {};
+                    headers.forEach((header, index) => {
+                        product[header] = values[index] ? values[index] : '';
+                    });
+                    return product;
+                });
+            };
+
+            const cechyData = parseCsv(cechyRaw, 1); // Headers are on the second line (index 1)
+            const zioloOgrodData = parseCsv(zioloOgrodRaw, 0); // Headers are on the first line (index 0)
+
+            const productsData = cechyData.map((cechyProduct, index) => {
+                const productName = cechyProduct.Nazwa.trim();
+                const zioloProduct = zioloOgrodData.find(zp => zp['Nazwa produktu'].trim() === productName);
+
+                let ageGroup = [];
+                if (cechyProduct.dorosły === '1') ageGroup.push('dorosły');
+                if (cechyProduct.dziecko === '1') ageGroup.push('dziecko');
+
+                let bodyPart = [];
+                if (cechyProduct.ciało === '1') bodyPart.push('ciało');
+                if (cechyProduct.twarz === '1') bodyPart.push('twarz');
+                if (cechyProduct['higiena intymna'] === '1') bodyPart.push('higiena intymna');
+                if (cechyProduct['higiena jamy ustnej'] === '1') bodyPart.push('higiena jamy ustnej');
+                if (cechyProduct.dłonie === '1') bodyPart.push('dłonie');
+                if (cechyProduct.włosy === '1') bodyPart.push('włosy');
+
+                let skinType = [];
+                // Infer skinType based on product name/description, since no direct columns in cechy.xlsx
+                if (productName.includes('such') || productName.includes('zmęczonej') || productName.includes('wiotkiej') || zioloProduct?.['Opis produktu'].includes('sucha')) skinType.push('sucha');
+                if (productName.includes('mieszanej') || zioloProduct?.['Opis produktu'].includes('mieszana')) skinType.push('mieszana');
+                if (productName.includes('tłustej') || zioloProduct?.['Opis produktu'].includes('tłusta')) skinType.push('tłusta');
+                if (productName.includes('normaln') || zioloProduct?.['Opis produktu'].includes('normalna')) skinType.push('normalna');
+                if (productName.includes('wrażliwa') || zioloProduct?.['Opis produktu'].includes('wrażliwa')) skinType.push('wrażliwa');
+                if (skinType.length === 0) skinType.push('normalna'); // Default if not explicitly inferred
+
+                let concern = [];
+                if (cechyProduct.nawilżenie === '1') concern.push('nawilżenie');
+                if (cechyProduct['przeciw zmarszczkom'] === '1') concern.push('anti-aging'); // Map to 'anti-aging' for UI button
+                if (cechyProduct['regulacja wydzielania sebum'] === '1' || (cechyProduct.oczyszczanie === '1' && (skinType.includes('tłusta') || skinType.includes('mieszana')))) concern.push('niedoskonałości'); // Combine for UI
+                if (cechyProduct['łagodzenie podrażnień'] === '1' || cechyProduct.ukojenie === '1') concern.push('łagodzenie'); // Combine for UI
+                if (cechyProduct['wyrównanie kolorytu'] === '1') concern.push('rozświetlenie');
+                if (cechyProduct.oczyszczanie === '1') concern.push('oczyszczanie');
+
+                // Add other specific concerns from cechy.xlsx for internal filtering
+                if (cechyProduct.odżywienie === '1') concern.push('odżywienie');
+                if (cechyProduct.regeneracja === '1') concern.push('regeneracja');
+                if (cechyProduct.zmiękczenie === '1') concern.push('zmiękczenie');
+                if (cechyProduct.wygładzenie === '1') concern.push('wygładzenie');
+                if (cechyProduct['wzmocnienie włosów'] === '1') concern.push('wzmocnienie włosów');
+                if (cechyProduct.uelastycznienie === '1') concern.push('uelastycznienie');
+                if (cechyProduct.tonizacja === '1') concern.push('tonizacja');
+                if (cechyProduct.natłuszczenie === '1') concern.push('natłuszczenie');
+                if (cechyProduct['bóle mięśni i stawów'] === '1') concern.push('bóle mięśni i stawów');
+                if (cechyProduct['żylaki i obrzęki'] === '1') concern.push('żylaki i obrzęki');
+                if (cechyProduct.antycellulitowe === '1') concern.push('antycellulitowe');
+                if (cechyProduct['usuwanie martwego naskórka'] === '1') concern.push('usuwanie martwego naskórka');
+                if (cechyProduct.odświeżenie === '1') concern.push('odświeżenie');
+                if (cechyProduct.bezzapachowy === '1') concern.push('bezzapachowy');
+                if (cechyProduct.wanna === '1') concern.push('wanna');
+                if (cechyProduct.prysznic === '1') concern.push('prysznic');
+                if (cechyProduct.objętość === '1') concern.push('objętość');
+
+                let ingredients = [];
+                let description = '';
+                if (zioloProduct) {
+                    description = zioloProduct['Opis produktu'] || '';
+                    if (zioloProduct['Składniki/ Ingredients:']) {
+                        ingredients = zioloProduct['Składniki/ Ingredients:'].split(',').map(s => s.trim());
+                    }
                 }
-            ];
-            
-            const state = { skinType: null, concern: null };
+
+                // Chart data is still mock, as source reports don't provide this breakdown.
+                const chartData = [Math.floor(Math.random() * 30) + 50, Math.floor(Math.random() * 20) + 15, Math.floor(Math.random() * 10) + 5];
+
+                return {
+                    id: index + 1,
+                    name: productName,
+                    desc: description,
+                    ingredients: ingredients,
+                    link: cechyProduct.Link,
+                    ageGroup: ageGroup,
+                    bodyPart: bodyPart,
+                    skinType: skinType,
+                    concern: concern,
+                    chartData: chartData
+                };
+            }).filter(p => p.name !== 'nie uwzględniać cechy'); // Filter out the placeholder row
+
+            const state = { ageGroup: null, bodyPart: null, skinType: null, concern: null, currentStep: 1 };
             const wizard = document.getElementById('wizard');
             const step1 = document.getElementById('step1');
             const step2 = document.getElementById('step2');
+            const step3 = document.getElementById('step3');
+            const step4 = document.getElementById('step4');
             const results = document.getElementById('results');
             const resultsContainer = document.getElementById('results-container');
+
+            function showStep(stepNumber) {
+                step1.classList.add('hidden');
+                step2.classList.add('hidden');
+                step3.classList.add('hidden');
+                step4.classList.add('hidden');
+                results.classList.add('hidden');
+
+                state.currentStep = stepNumber;
+                switch (stepNumber) {
+                    case 1: step1.classList.remove('hidden'); break;
+                    case 2: step2.classList.remove('hidden'); break;
+                    case 3: step3.classList.remove('hidden'); break;
+                    case 4: step4.classList.remove('hidden'); break;
+                    case 5: displayResults(); results.classList.remove('hidden'); break;
+                }
+            }
 
             wizard.addEventListener('click', (e) => {
                 if (e.target.matches('[data-choice]')) {
                     const { choice, value } = e.target.dataset;
                     state[choice] = value;
-                    if (choice === 'skinType') {
-                        step1.classList.add('hidden');
-                        step2.classList.remove('hidden');
-                    } else if (choice === 'concern') {
-                        step2.classList.add('hidden');
-                        displayResults();
-                        results.classList.remove('hidden');
-                    }
+                    showStep(state.currentStep + 1);
                 }
             });
 
             document.getElementById('back-to-step1').addEventListener('click', () => {
+                state.bodyPart = null;
+                showStep(1);
+            });
+            document.getElementById('back-to-step2').addEventListener('click', () => {
+                state.skinType = null;
+                showStep(2);
+            });
+            document.getElementById('back-to-step3').addEventListener('click', () => {
                 state.concern = null;
-                step2.classList.add('hidden');
-                step1.classList.remove('hidden');
+                showStep(3);
             });
 
             document.getElementById('restart-wizard').addEventListener('click', () => {
+                state.ageGroup = null;
+                state.bodyPart = null;
                 state.skinType = null;
                 state.concern = null;
-                results.classList.add('hidden');
-                step1.classList.remove('hidden');
                 resultsContainer.innerHTML = '';
+                showStep(1);
             });
 
             function displayResults() {
                 const filteredProducts = productsData.filter(p =>
+                    (state.ageGroup === null || p.ageGroup.includes(state.ageGroup)) &&
+                    (state.bodyPart === null || p.bodyPart.includes(state.bodyPart)) &&
                     (state.skinType === null || p.skinType.includes(state.skinType)) &&
                     (state.concern === null || p.concern.includes(state.concern))
                 );
@@ -348,7 +571,7 @@
                         resultsContainer.innerHTML += productCard;
                     });
                 } else {
-                    resultsContainer.innerHTML = '<p class="text-center text-gray-600">Przepraszamy, nie znaleziono rekomendacji dla tego połączenia. Spróbuj ponownie.</p>';
+                    resultsContainer.innerHTML = '<p class="text-center text-gray-600">Przepraszamy, nie znaleziono rekomendacji dla tego połączenia. Spróbuj ponownie, zmieniając kryteria.</p>';
                 }
             }
             
@@ -456,6 +679,9 @@
                     mobileMenu.classList.add('hidden');
                 }
             });
+            
+            // Initial step display
+            showStep(1);
 
         });
     </script>
