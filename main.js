@@ -1,90 +1,57 @@
 /**
  * @file Main application script for the Holistic Cosmetics Selector.
- * @description This script dynamically builds a wizard from CSV data,
- * fetches and merges product information including ingredients,
- * and provides personalized recommendations.
+ * @description This script handles all page interactivity, including the dynamic wizard,
+ * the AI creator simulation, and mobile navigation. It uses a pre-compiled database
+ * from database.js.
  */
 document.addEventListener('DOMContentLoaded', () => {
 
+    // --- Sprawdzenie kluczowej zależności ---
+    if (typeof productsData === 'undefined') {
+        console.error("Baza danych (database.js) nie została załadowana! Upewnij się, że plik database.js jest dołączony w index.html PRZED main.js.");
+        const wizardContainer = document.getElementById('wizard-content-container');
+        if(wizardContainer) {
+            wizardContainer.innerHTML = `<p class="text-center text-red-500">Błąd krytyczny: Brak bazy danych.</p>`;
+        }
+        return; // Zatrzymujemy działanie skryptu, jeśli nie ma danych
+    }
+
+    // --- Stan Aplikacji i Elementy DOM ---
     const AppState = {
-        products: [],
+        products: productsData,
         wizardConfig: [],
         currentStep: 0,
         userChoices: {},
     };
 
     const DOMElements = {
+        // Nawigacja
+        mobileMenuButton: document.getElementById('mobile-menu-button'),
+        mobileMenu: document.getElementById('mobile-menu'),
+
+        // Interaktywne Demo (Wizard)
         wizard: document.getElementById('wizard'),
         wizardContentContainer: document.getElementById('wizard-content-container'),
         resultsContainer: document.getElementById('results-container'),
         wizardNavigation: document.getElementById('wizard-navigation'),
+        
+        // Modal
         modal: document.getElementById('modal'),
         modalTitle: document.getElementById('modal-title'),
         modalBody: document.getElementById('modal-body'),
         closeModalBtn: document.getElementById('close-modal'),
         modalBackdrop: document.querySelector('.modal-backdrop'),
+
+        // Kreator AI
+        generateFormulaBtn: document.getElementById('generate-formula'),
+        baseSelect: document.getElementById('base'),
+        activeSelect: document.getElementById('active'),
+        formulaOutput: document.getElementById('formula-output'),
+        formulaText: document.getElementById('formula-text'),
     };
 
-    /**
-     * Parses CSV text data into an array of objects.
-     * @param {string} text - The raw CSV text.
-     * @param {string} delimiter - The character separating columns.
-     * @returns {Array<Object>}
-     */
-    const parseCSV = (text, delimiter = ',') => {
-        const lines = text.trim().replace(/\r/g, '').split('\n');
-        if (lines.length < 2) return [];
-        const header = lines[0].split(delimiter).map(h => h.trim());
-        return lines.slice(1).map(line => {
-            const values = line.split(delimiter);
-            return header.reduce((obj, nextKey, index) => {
-                obj[nextKey] = (values[index] || '').trim();
-                return obj;
-            }, {});
-        });
-    };
+    // --- Logika Kreatora (Wizard) ---
 
-    /**
-     * Fetches all required CSV files and merges them into a single product list.
-     * @returns {Promise<Array<Object>>} A promise that resolves to the merged product list.
-     */
-    async function loadAndMergeData() {
-        const [cechyText, jozkaBeautyText, ziolowyOgrodText] = await Promise.all([
-            fetch('cechy.csv').then(res => res.text()),
-            fetch('Kopia Jozka Beauty - informacje na opakowania - Arkusz1.csv').then(res => res.text()),
-            fetch('Ziołowy Ogród- informacje na opakowania.xlsx - Arkusz1.csv').then(res => res.text()),
-        ]);
-
-        const cechyData = parseCSV(cechyText, ';');
-        const jozkaBeautyData = parseCSV(jozkaBeautyText);
-        const ziolowyOgrodData = parseCSV(ziolowyOgrodText);
-
-        const ingredientsMap = new Map();
-        [...jozkaBeautyData, ...ziolowyOgrodData].forEach(p => {
-            if (p['Nazwa produktu'] && p['Skład (INCI)']) {
-                ingredientsMap.set(p['Nazwa produktu'], p['Skład (INCI)']);
-            }
-        });
-
-        return cechyData.map((product, index) => ({
-            id: index,
-            name: product['Produkt'],
-            link: product['Link do produktu'],
-            criteria: {
-                grupaWiekowa: product['grupa wiekowa'],
-                plec: product['Płeć'],
-                rodzajSkory: product['Rodzaj skóry'],
-                problemSkory: product['Problem skóry'],
-            },
-            ingredients: ingredientsMap.get(product['Produkt']) || 'Brak danych o składzie.',
-        }));
-    }
-
-    /**
-     * Creates the wizard configuration (steps, questions, options) from the product data.
-     * @param {Array<Object>} products - The merged list of products.
-     * @returns {Array<Object>} The configuration for the wizard.
-     */
     function createWizardConfig(products) {
         const getUniqueOptions = (key) => Array.from(new Set(products.map(p => p.criteria[key]))).filter(Boolean);
 
@@ -93,12 +60,9 @@ document.addEventListener('DOMContentLoaded', () => {
             { question: "Dla jakiej płci?", propertyKey: "plec", options: getUniqueOptions("plec") },
             { question: "Jaki jest Twój rodzaj cery?", propertyKey: "rodzajSkory", options: getUniqueOptions("rodzajSkory") },
             { question: "Jaki jest Twój główny problem skórny?", propertyKey: "problemSkory", options: getUniqueOptions("problemSkory") },
-        ];
+        ].filter(step => step.options.length > 0);
     }
 
-    /**
-     * Renders the current step of the wizard.
-     */
     function renderCurrentStep() {
         DOMElements.resultsContainer.classList.add('hidden');
         DOMElements.wizardContentContainer.classList.remove('hidden');
@@ -120,46 +84,31 @@ document.addEventListener('DOMContentLoaded', () => {
         renderNavigation();
     }
     
-    /** Renders wizard navigation buttons (Back, Restart) */
     function renderNavigation() {
-        let backButton = '';
-        if (AppState.currentStep > 0) {
-            backButton = `<button id="back-btn" class="text-[#A0522D] hover:underline">Wróć</button>`;
-        }
+        const backButton = AppState.currentStep > 0 ? `<button id="back-btn" class="text-[#A0522D] hover:underline">Wróć</button>` : '';
         DOMElements.wizardNavigation.innerHTML = backButton;
     }
 
-    /**
-     * Filters products and displays the results.
-     */
     function displayResults() {
         DOMElements.wizardContentContainer.classList.add('hidden');
         DOMElements.resultsContainer.classList.remove('hidden');
 
-        const filteredProducts = AppState.products.filter(p => {
-            return Object.entries(AppState.userChoices).every(([key, value]) => p.criteria[key] === value);
-        });
+        const filteredProducts = AppState.products.filter(p => 
+            Object.entries(AppState.userChoices).every(([key, value]) => p.criteria[key] === value)
+        );
+        
+        const uniqueProducts = Array.from(new Map(filteredProducts.map(p => [p.name, p])).values());
 
-        if (filteredProducts.length > 0) {
-            DOMElements.resultsContainer.innerHTML = `
-                <h4 class="text-2xl font-semibold text-center mb-6">Oto Twoje spersonalizowane rekomendacje:</h4>
-                <div class="space-y-4">${filteredProducts.map(createProductCard).join('')}</div>`;
-        } else {
-            DOMElements.resultsContainer.innerHTML = '<p class="text-center text-gray-600">Przepraszamy, nie znaleziono rekomendacji dla tego połączenia. Spróbuj ponownie.</p>';
-        }
+        DOMElements.resultsContainer.innerHTML = uniqueProducts.length > 0
+            ? `<h4 class="text-2xl font-semibold text-center mb-6">Oto Twoje spersonalizowane rekomendacje:</h4>
+               <div class="space-y-4">${uniqueProducts.map(createProductCard).join('')}</div>`
+            : '<p class="text-center text-gray-600">Przepraszamy, nie znaleziono rekomendacji dla tego połączenia. Spróbuj ponownie.</p>';
         
         DOMElements.wizardNavigation.innerHTML = `<button id="restart-btn" class="w-full bg-[#A0522D] text-white font-bold py-3 px-8 rounded-lg hover:bg-[#8B4513] transition">Zacznij od nowa</button>`;
     }
 
-    /**
-     * Generates the HTML for a single product card.
-     * @param {Object} product - The product object.
-     * @returns {string} HTML string for the product card.
-     */
     function createProductCard(product) {
-        const linkButton = product.link
-            ? `<a href="${product.link}" target="_blank" rel="noopener noreferrer" class="text-sm bg-[#6B5B4B] text-white py-1 px-3 rounded hover:bg-[#3D3A37] transition">Zobacz produkt</a>`
-            : '';
+        const linkButton = product.link ? `<a href="${product.link}" target="_blank" rel="noopener noreferrer" class="text-sm bg-[#6B5B4B] text-white py-1 px-3 rounded hover:bg-[#3D3A37] transition">Zobacz produkt</a>` : '';
         return `
             <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 text-left">
                 <h5 class="font-bold text-lg">${product.name}</h5>
@@ -176,42 +125,28 @@ document.addEventListener('DOMContentLoaded', () => {
         renderCurrentStep();
     }
 
-    // --- Event Handlers ---
-    
-    function handleWizardInteraction(e) {
-        const choiceButton = e.target.closest('[data-choice]');
-        const backButton = e.target.closest('#back-btn');
-        const restartButton = e.target.closest('#restart-btn');
-        const actionButton = e.target.closest('[data-action]');
+    // --- Logika dla pozostałych sekcji ---
 
-        if (choiceButton) {
-            const { choice, value } = choiceButton.dataset;
-            AppState.userChoices[choice] = value;
-            AppState.currentStep++;
-            renderCurrentStep();
-        } else if (backButton) {
-            AppState.currentStep--;
-            // Remove the last choice
-            const lastChoiceKey = AppState.wizardConfig[AppState.currentStep].propertyKey;
-            delete AppState.userChoices[lastChoiceKey];
-            renderCurrentStep();
-        } else if (restartButton) {
-            resetWizard();
-        } else if (actionButton) {
-            const { action, id } = actionButton.dataset;
-            const product = AppState.products.find(p => p.id == id);
-            if (!product) return;
-
-            if (action === 'ingredients') {
-                openModal(`Skład INCI: ${product.name}`, product.ingredients.replace(/, /g, '\n'));
-            }
-        }
+    function toggleMobileMenu() {
+        DOMElements.mobileMenu.classList.toggle('hidden');
     }
 
-    // --- Modal Functions ---
+    function generateAiFormula() {
+        const base = DOMElements.baseSelect.value;
+        const active = DOMElements.activeSelect.value;
+        
+        DOMElements.formulaText.value = `GENEROWANIE RECEPTURY...\nBaza: ${base}\nSkładnik Aktywny: ${active}\nProporcje: SI analizuje...`;
+        DOMElements.formulaOutput.classList.remove('hidden');
+
+        setTimeout(() => {
+            DOMElements.formulaText.value = `Wygenerowana Receptura (Przykład):\n- ${base}: 85%\n- ${active}: 10%\n- Gliceryna (humektant): 4%\n- Konserwant naturalny: 1%`;
+        }, 1500);
+    }
+
+    // --- Modal ---
     function openModal(title, content) {
         DOMElements.modalTitle.innerText = title;
-        DOMElements.modalBody.innerHTML = content;
+        DOMElements.modalBody.innerText = content;
         DOMElements.modal.classList.remove('hidden');
         DOMElements.modal.classList.add('flex');
         setTimeout(() => {
@@ -229,25 +164,55 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 300);
     }
     
-    /**
-     * Initializes the application.
-     */
-    async function init() {
-        DOMElements.wizardContentContainer.innerHTML = `<p class="text-center">Ładowanie kreatora...</p>`;
-        try {
-            const mergedData = await loadAndMergeData();
-            AppState.products = mergedData;
-            AppState.wizardConfig = createWizardConfig(mergedData);
-            
-            DOMElements.wizard.addEventListener('click', handleWizardInteraction);
-            DOMElements.closeModalBtn.addEventListener('click', closeModal);
-            DOMElements.modalBackdrop.addEventListener('click', closeModal);
-            
-            renderCurrentStep();
-        } catch (error) {
-            console.error("Initialization failed:", error);
-            DOMElements.wizardContentContainer.innerHTML = `<p class="text-center text-red-500">Wystąpił błąd podczas ładowania danych. Spróbuj odświeżyć stronę.</p>`;
-        }
+    // --- Główna funkcja inicjalizująca ---
+
+    function init() {
+        // Inicjalizacja Kreatora
+        AppState.wizardConfig = createWizardConfig(AppState.products);
+        renderCurrentStep();
+
+        // Ustawienie wszystkich event listenerów
+        DOMElements.wizard.addEventListener('click', (e) => {
+            const choiceButton = e.target.closest('[data-choice]');
+            const backButton = e.target.closest('#back-btn');
+            const restartButton = e.target.closest('#restart-btn');
+            const actionButton = e.target.closest('[data-action]');
+
+            if (choiceButton) {
+                const { choice, value } = choiceButton.dataset;
+                AppState.userChoices[choice] = value;
+                AppState.currentStep++;
+                renderCurrentStep();
+            } else if (backButton) {
+                AppState.currentStep--;
+                const lastChoiceKey = AppState.wizardConfig[AppState.currentStep].propertyKey;
+                delete AppState.userChoices[lastChoiceKey];
+                renderCurrentStep();
+            } else if (restartButton) {
+                resetWizard();
+            } else if (actionButton) {
+                const { action, id } = actionButton.dataset;
+                const product = AppState.products.find(p => p.id == id);
+                if (product && action === 'ingredients') {
+                    openModal(`Skład INCI: ${product.name}`, product.ingredients.replace(/, /g, ',\n'));
+                }
+            }
+        });
+
+        // Listenery dla Modala
+        DOMElements.closeModalBtn.addEventListener('click', closeModal);
+        DOMElements.modalBackdrop.addEventListener('click', closeModal);
+        
+        // Listenery dla Mobilnego Menu
+        DOMElements.mobileMenuButton.addEventListener('click', toggleMobileMenu);
+        DOMElements.mobileMenu.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') {
+                toggleMobileMenu();
+            }
+        });
+
+        // Listener dla Kreatora AI
+        DOMElements.generateFormulaBtn.addEventListener('click', generateAiFormula);
     }
 
     init();
