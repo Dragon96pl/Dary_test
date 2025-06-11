@@ -108,9 +108,11 @@
                 <div id="step1">
                     <h4 class="text-2xl font-semibold text-center mb-6">Krok 1: Jaki jest Twój typ cery?</h4>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <button data-choice="skin" data-value="sucha" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Sucha</button>
-                        <button data-choice="skin" data-value="mieszana" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Mieszana</button>
-                        <button data-choice="skin" data-value="tłusta" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Tłusta</button>
+                        <button data-choice="skinType" data-value="sucha" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Sucha</button>
+                        <button data-choice="skinType" data-value="mieszana" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Mieszana</button>
+                        <button data-choice="skinType" data-value="tłusta" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Tłusta</button>
+                        <button data-choice="skinType" data-value="normalna" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Normalna</button>
+                        <button data-choice="skinType" data-value="wrażliwa" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Wrażliwa</button>
                     </div>
                 </div>
 
@@ -120,6 +122,8 @@
                         <button data-choice="concern" data-value="nawilżenie" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Nawilżenie</button>
                         <button data-choice="concern" data-value="przeciwzmarszczkowe" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Anti-Aging</button>
                         <button data-choice="concern" data-value="wypryski" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Walka z wypryskami</button>
+                        <button data-choice="concern" data-value="łagodzenie" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Łagodzenie</button>
+                        <button data-choice="concern" data-value="rozświetlenie" class="wizard-button p-4 border rounded-lg hover:bg-[#F8F4EF] hover:border-[#A0522D] transition">Rozświetlenie</button>
                     </div>
                      <button id="back-to-step1" class="mt-6 w-full text-center text-[#A0522D] hover:underline">Wróć</button>
                 </div>
@@ -213,38 +217,80 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const mockData = {
-                'sucha-nawilżenie': [
-                    { id: 1, name: 'Hydro-Krem Intensywny', desc: 'Bogaty krem, który natychmiastowo nawilża i łagodzi suchą skórę.', ingredients: ['Kwas Hialuronowy', 'Masło Shea', 'Ceramidy'], chartData: [60, 25, 15] },
-                    { id: 2, name: 'Eliksir Nawadniający', desc: 'Lekkie serum, które wiąże wodę w naskórku, zapewniając długotrwałe nawilżenie.', ingredients: ['Gliceryna', 'Ekstrakt z aloesu', 'Pantenol'], chartData: [50, 40, 10] }
-                ],
-                'sucha-przeciwzmarszczkowe': [
-                    { id: 3, name: 'Krem Odmładzający z Peptydami', desc: 'Zaawansowana formuła, która redukuje zmarszczki i nawilża.', ingredients: ['Peptydy miedziowe', 'Kwas hialuronowy', 'Witamina E'], chartData: [45, 35, 20] }
-                ],
-                'sucha-wypryski': [
-                    { id: 4, name: 'Delikatny Krem-Żel z Kwasem Azelainowym', desc: 'Nawilża, jednocześnie łagodząc stany zapalne i niedoskonałości.', ingredients: ['Kwas azelainowy', 'Niacynamid', 'Alantoina'], chartData: [55, 30, 15] }
-                ],
-                'mieszana-nawilżenie': [
-                    { id: 5, name: 'Lekki Fluid Matująco-Nawilżający', desc: 'Idealny dla cery mieszanej, nawilża suche partie i matuje tłuste.', ingredients: ['Ekstrakt z zielonej herbaty', 'Kwas hialuronowy', 'Krzemionka'], chartData: [65, 25, 10] }
-                ],
-                'mieszana-przeciwzmarszczkowe': [
-                    { id: 6, name: 'Serum z Retinolem dla Cery Mieszanej', desc: 'Wygładza zmarszczki bez obciążania strefy T.', ingredients: ['Retinol 0.3%', 'Skwalan', 'Ekstrakt z wąkroty azjatyckiej'], chartData: [40, 40, 20] }
-                ],
-                'mieszana-wypryski': [
-                     { id: 7, name: 'Tonik z Kwasem Salicylowym', desc: 'Oczyszcza pory i reguluje wydzielanie sebum.', ingredients: ['Kwas salicylowy 2%', 'Niacynamid', 'Woda oczarowa'], chartData: [70, 20, 10] }
-                ],
-                'tłusta-nawilżenie': [
-                    { id: 8, name: 'Beztłuszczowy Żel Nawilżający', desc: 'Lekka, żelowa formuła, która nawadnia skórę bez zapychania porów.', ingredients: ['Kwas hialuronowy', 'Pantenol', 'Cynk PCA'], chartData: [75, 15, 10] }
-                ],
-                'tłusta-przeciwzmarszczkowe': [
-                     { id: 9, name: 'Emulsja Anti-Aging dla Skóry Tłustej', desc: 'Lekka emulsja z antyoksydantami, która zwalcza oznaki starzenia.', ingredients: ['Resweratrol', 'Witamina C', 'Kwas ferulowy'], chartData: [50, 35, 15] }
-                ],
-                'tłusta-wypryski': [
-                     { id: 10, name: 'Serum z Niacynamidem 10%', desc: 'Redukuje wypryski, zwęża pory i reguluje produkcję sebum.', ingredients: ['Niacynamid 10%', 'Cynk PCA', 'Gliceryna'], chartData: [60, 30, 10] }
-                ]
-            };
+            const productsData = [
+                {
+                    id: 1,
+                    name: 'Krem Nawilżający z Kwasem Hialuronowym',
+                    desc: 'Intensywnie nawilża, idealny dla cery suchej i normalnej, pozostawia skórę gładką i elastyczną.',
+                    ingredients: ['Kwas Hialuronowy', 'Gliceryna', 'Masło Shea', 'Ekstrakt z aloesu'],
+                    link: 'https://www.przykladowyproducent.pl/krem-nawilzajacy',
+                    skinType: ['sucha', 'normalna'],
+                    concern: ['nawilżenie', 'łagodzenie'],
+                    chartData: [55, 30, 15]
+                },
+                {
+                    id: 2,
+                    name: 'Serum Wygładzające z Retinolem',
+                    desc: 'Silne serum przeciwzmarszczkowe dla cery dojrzałej, redukuje drobne linie i poprawia jędrność.',
+                    ingredients: ['Retinol', 'Peptydy', 'Witamina E', 'Skwalan'],
+                    link: 'https://www.przykladowyproducent.pl/serum-retinolowe',
+                    skinType: ['normalna', 'mieszana', 'sucha'],
+                    concern: ['przeciwzmarszczkowe'],
+                    chartData: [40, 45, 15]
+                },
+                {
+                    id: 3,
+                    name: 'Żel Oczyszczający do Cery Tłustej i Mieszanej',
+                    desc: 'Delikatnie oczyszcza pory, redukuje nadmiar sebum i zapobiega wypryskom.',
+                    ingredients: ['Kwas Salicylowy', 'Niacynamid', 'Ekstrakt z zielonej herbaty'],
+                    link: 'https://www.przykladowyproducent.pl/zel-oczyszczajacy',
+                    skinType: ['tłusta', 'mieszana'],
+                    concern: ['wypryski', 'rozświetlenie'],
+                    chartData: [60, 25, 15]
+                },
+                {
+                    id: 4,
+                    name: 'Krem Łagodzący z Pantenolem',
+                    desc: 'Koi podrażnienia i zaczerwienienia, idealny dla cery wrażliwej i po zabiegach kosmetycznych.',
+                    ingredients: ['Pantenol', 'Alantoina', 'Ekstrakt z nagietka'],
+                    link: 'https://www.przykladowyproducent.pl/krem-lagodzacy',
+                    skinType: ['wrażliwa', 'sucha'],
+                    concern: ['łagodzenie', 'nawilżenie'],
+                    chartData: [65, 20, 15]
+                },
+                {
+                    id: 5,
+                    name: 'Serum Rozświetlające z Witaminą C',
+                    desc: 'Wyrównuje koloryt skóry, rozjaśnia przebarwienia i dodaje blasku.',
+                    ingredients: ['Witamina C', 'Kwas Ferulowy', 'Witamina E', 'Ekstrakt z lukrecji'],
+                    link: 'https://www.przykladowyproducent.pl/serum-witamina-c',
+                    skinType: ['normalna', 'mieszana'],
+                    concern: ['rozświetlenie', 'przeciwzmarszczkowe'],
+                    chartData: [50, 40, 10]
+                },
+                 {
+                    id: 6,
+                    name: 'Tonik Matujący do Cery Tłustej',
+                    desc: 'Zmniejsza widoczność porów i reguluje wydzielanie sebum, zapewniając długotrwały efekt matujący.',
+                    ingredients: ['Cynk PCA', 'Ekstrakt z wierzbownicy', 'Woda oczarowa'],
+                    link: 'https://www.przykladowyproducent.pl/tonik-matujacy',
+                    skinType: ['tłusta'],
+                    concern: ['wypryski'],
+                    chartData: [70, 20, 10]
+                },
+                 {
+                    id: 7,
+                    name: 'Krem pod Oczy Anti-Aging',
+                    desc: 'Zmniejsza cienie i opuchliznę pod oczami, wygładza drobne zmarszczki.',
+                    ingredients: ['Kofeina', 'Peptydy', 'Kwas hialuronowy'],
+                    link: 'https://www.przykladowyproducent.pl/krem-pod-oczy',
+                    skinType: ['sucha', 'normalna', 'wrażliwa'],
+                    concern: ['przeciwzmarszczkowe', 'rozświetlenie'],
+                    chartData: [45, 40, 15]
+                }
+            ];
             
-            const state = { skin: null, concern: null };
+            const state = { skinType: null, concern: null };
             const wizard = document.getElementById('wizard');
             const step1 = document.getElementById('step1');
             const step2 = document.getElementById('step2');
@@ -255,7 +301,7 @@
                 if (e.target.matches('[data-choice]')) {
                     const { choice, value } = e.target.dataset;
                     state[choice] = value;
-                    if (choice === 'skin') {
+                    if (choice === 'skinType') {
                         step1.classList.add('hidden');
                         step2.classList.remove('hidden');
                     } else if (choice === 'concern') {
@@ -273,7 +319,7 @@
             });
 
             document.getElementById('restart-wizard').addEventListener('click', () => {
-                state.skin = null;
+                state.skinType = null;
                 state.concern = null;
                 results.classList.add('hidden');
                 step1.classList.remove('hidden');
@@ -281,18 +327,22 @@
             });
 
             function displayResults() {
-                const key = `${state.skin}-${state.concern}`;
-                const products = mockData[key] || [];
+                const filteredProducts = productsData.filter(p =>
+                    (state.skinType === null || p.skinType.includes(state.skinType)) &&
+                    (state.concern === null || p.concern.includes(state.concern))
+                );
+
                 resultsContainer.innerHTML = '';
-                if (products.length > 0) {
-                    products.forEach(p => {
+                if (filteredProducts.length > 0) {
+                    filteredProducts.forEach(p => {
                         const productCard = `
                             <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
                                 <h5 class="font-bold text-lg">${p.name}</h5>
                                 <p class="text-sm text-gray-600 mb-3">${p.desc}</p>
-                                <div class="flex space-x-2">
+                                <div class="flex flex-wrap gap-2">
                                     <button data-modal="ingredients" data-id="${p.id}" class="text-sm bg-[#A0522D] text-white py-1 px-3 rounded hover:bg-[#8B4513] transition">Zobacz skład</button>
                                     <button data-modal="chart" data-id="${p.id}" class="text-sm bg-gray-200 text-gray-800 py-1 px-3 rounded hover:bg-gray-300 transition">Zobacz statystyki</button>
+                                    ${p.link ? `<a href="${p.link}" target="_blank" rel="noopener noreferrer" class="text-sm bg-[#6B5B4B] text-white py-1 px-3 rounded hover:bg-[#3D3A37] transition">Strona Producenta</a>` : ''}
                                 </div>
                             </div>`;
                         resultsContainer.innerHTML += productCard;
@@ -334,9 +384,10 @@
                 if (!button) return;
                 
                 const { modal: modalType, id } = button.dataset;
-                const key = `${state.skin}-${state.concern}`;
-                const product = mockData[key].find(p => p.id == id);
+                const product = productsData.find(p => p.id == id);
                 
+                if (!product) return; // Add a safeguard if product is not found
+
                 if (modalType === 'ingredients') {
                     const content = `<ul>${product.ingredients.map(i => `<li class="mb-1 p-2 bg-gray-100 rounded">${i}</li>`).join('')}</ul>`;
                     openModal(`Składniki: ${product.name}`, content);
