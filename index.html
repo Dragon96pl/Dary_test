@@ -93,40 +93,51 @@
         </section>
 
         <section id="ai-creator" class="py-16">
-            <div class="text-center mb-12">
-                 <h3 class="text-3xl font-bold text-[#6B5B4B] mb-2">Stwórz Własny Kosmetyk <span class="text-sm align-top bg-yellow-200 text-yellow-800 px-2 py-1 rounded-full">Beta</span></h3>
-                <p class="max-w-3xl mx-auto text-[#5C5855]">Ta sekcja pozwala Ci wypróbować naszą eksperymentalną funkcję opartą na Sztucznej Inteligencji. Możesz skomponować własną recepturę, wybierając bazę i składniki aktywne. Pamiętaj, że to narzędzie jest w fazie rozwoju i jego sugestie należy traktować z ostrożnością.</p>
+    <div class="text-center mb-12">
+        <h3 class="text-3xl font-bold text-[#6B5B4B] mb-2">Stwórz Własny Kosmetyk <span class="text-sm align-top bg-yellow-200 text-yellow-800 px-2 py-1 rounded-full">Beta</span></h3>
+        <p class="max-w-3xl mx-auto text-[#5C5855]">Ta sekcja pozwala Ci wypróbować naszą eksperymentalną funkcję opartą na Sztucznej Inteligencji. Możesz skomponować własną recepturę, wybierając bazę i składniki aktywne. Pamiętaj, że to narzędzie jest w fazie rozwoju i jego sugestie należy traktować z ostrożnością.</p>
+    </div>
+    <div class="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-md border border-[#EAE5DD]">
+        <div class="grid md:grid-cols-2 gap-6 mb-4"> <!-- Increased gap for better spacing -->
+            <div>
+                <label for="base" class="block mb-1 font-medium">Wybierz bazę:</label>
+                <select id="base" class="w-full p-2 border rounded-lg">
+                    <option>Baza hialuronowa</option>
+                    <option>Baza aloesowa</option>
+                    <option>Baza lipidowa</option>
+                </select>
             </div>
-            <div class="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-md border border-[#EAE5DD]">
-                 <div class="grid md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label for="base" class="block mb-1 font-medium">Wybierz bazę:</label>
-                        <select id="base" class="w-full p-2 border rounded-lg">
-                            <option>Baza hialuronowa</option>
-                            <option>Baza aloesowa</option>
-                            <option>Baza lipidowa</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="active" class="block mb-1 font-medium">Wybierz składnik aktywny:</label>
-                        <select id="active" class="w-full p-2 border rounded-lg">
-                            <option>Witamina C</option>
-                            <option>Retinol</option>
-                            <option>Niacynamid</option>
-                        </select>
-                    </div>
-                </div>
-                <button id="generate-formula" class="w-full bg-[#A0522D] text-white font-bold py-3 px-8 rounded-lg hover:bg-[#8B4513] transition mb-4">Generuj Recepturę</button>
-                <div id="formula-output" class="hidden">
-                    <h5 class="font-semibold mb-2">Twoja wygenerowana receptura:</h5>
-                    <textarea id="formula-text" readonly class="w-full h-32 p-2 bg-gray-100 rounded-lg border"></textarea>
-                    <div class="mt-4 p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 rounded-r-lg">
-                        <h6 class="font-bold">Ważna uwaga!</h6>
-                        <p class="text-sm">Ta funkcja jest eksperymentalna i działa w oparciu o SI. Sugestie mogą zawierać błędy. Zawsze weryfikuj uzyskane informacje i zachowaj ostrożność.</p>
-                    </div>
+            <div>
+                <label class="block mb-1 font-medium">Wybierz składniki aktywne (max 2):</label>
+                <!-- Container for dynamically added checkboxes. Original select is removed by JS. -->
+                <div id="active-ingredients-selector-placeholder"> 
+                    <!-- This select will be replaced by checkboxes in JS -->
+                    <select id="active" class="w-full p-2 border rounded-lg hidden">
+                        <option>Witamina C</option>
+                        <option>Retinol</option>
+                        <option>Niacynamid</option>
+                    </select>
                 </div>
             </div>
-        </section>
+            <div class="md:col-span-2"> <!-- Spans two columns for better layout -->
+                 <label for="product-type-ai" class="block mb-1 font-medium">Wybierz typ produktu:</label>
+                 <select id="product-type-ai" class="w-full p-2 border rounded-lg">
+                     <option value="Krem">Krem</option>
+                     <option value="Szampon">Szampon do włosów</option>
+                 </select>
+            </div>
+        </div>
+        <button id="generate-formula" class="w-full bg-[#A0522D] text-white font-bold py-3 px-8 rounded-lg hover:bg-[#8B4513] transition mb-4">Generuj Recepturę</button>
+        <div id="formula-output" class="hidden">
+            <h5 class="font-semibold mb-2">Twoja wygenerowana receptura:</h5>
+            <textarea id="formula-text" readonly class="w-full h-40 p-2 bg-gray-100 rounded-lg border"></textarea> <!-- Increased height -->
+            <div class="mt-4 p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 rounded-r-lg">
+                <h6 class="font-bold">Ważna uwaga!</h6>
+                <p class="text-sm">Ta funkcja jest eksperymentalna i działa w oparciu o SI. Sugestie mogą zawierać błędy. Zawsze weryfikuj uzyskane informacje i zachowaj ostrożność.</p>
+            </div>
+        </div>
+    </div>
+</section>
 
         <section id="docker" class="py-16 bg-[#F8F4EF] -mx-6 px-6 rounded-xl">
             <div class="text-center mb-12">
