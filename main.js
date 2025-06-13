@@ -6,17 +6,15 @@
  */
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- Sprawdzenie kluczowej zależności ---
     if (typeof productsData === 'undefined' || !Array.isArray(productsData)) {
         console.error("Baza danych (productsData w database.js) nie została załadowana lub ma nieprawidłowy format! Upewnij się, że plik database.js jest dołączony w index.html PRZED main.js i zawiera tablicę 'productsData'.");
         const wizardContainer = document.getElementById('wizard-content-container');
         if (wizardContainer) {
             wizardContainer.innerHTML = `<p class="text-center text-red-500">Błąd krytyczny: Brak lub nieprawidłowa baza danych.</p>`;
         }
-        return; // Zatrzymujemy działanie skryptu
+        return;
     }
 
-    // --- Stan Aplikacji i Elementy DOM ---
     const AppState = {
         products: productsData,
         wizardStepsConfig: [], 
@@ -52,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         productTypeSelect: document.getElementById('product-type-ai'), 
         formulaOutput: document.getElementById('formula-output'),
         formulaText: document.getElementById('formula-text'),
-        activeIngredientsCheckboxes: null // zostanie przypisane w setupAiCreator
+        activeIngredientsCheckboxes: null
     };
 
     // --- Logika Kreatora (Wizard) ---
