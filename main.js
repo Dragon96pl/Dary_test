@@ -6,26 +6,28 @@
  */
 document.addEventListener('DOMContentLoaded', () => {
 
+    // --- Sprawdzenie kluczowej zależności ---
     if (typeof productsData === 'undefined' || !Array.isArray(productsData)) {
         console.error("Baza danych (productsData w database.js) nie została załadowana lub ma nieprawidłowy format! Upewnij się, że plik database.js jest dołączony w index.html PRZED main.js i zawiera tablicę 'productsData'.");
         const wizardContainer = document.getElementById('wizard-content-container');
         if (wizardContainer) {
             wizardContainer.innerHTML = `<p class="text-center text-red-500">Błąd krytyczny: Brak lub nieprawidłowa baza danych.</p>`;
         }
-        return;
+        return; // Zatrzymujemy działanie skryptu
     }
 
+    // --- Stan Aplikacji i Elementy DOM ---
     const AppState = {
         products: productsData,
-        wizardStepsConfig: [],
+        wizardStepsConfig: [], 
         currentWizardStepIndex: 0,
-        userChoices: {},
-        currentFilteredProducts: [...productsData],
-        aiCreatorRecipes: {
-            krem_hialuronowa_vitC_retinol: "Wygenerowana Receptura (Krem):\n- Baza hialuronowa: 75%\n- Witamina C (stabilna forma): 10%\n- Retinol (0.5%): 5%\n- Skwalan (emolient): 5%\n- Gliceryna (humektant): 4%\n- Konserwant naturalny: 1%",
-            krem_hialuronowa_vitC: "Wygenerowana Receptura (Krem):\n- Baza hialuronowa: 80%\n- Witamina C (stabilna forma): 15%\n- Gliceryna (humektant): 4%\n- Konserwant naturalny: 1%",
+        userChoices: {}, 
+        currentFilteredProducts: [...productsData], 
+        aiCreatorRecipes: { 
+            krem_hialuronowa_witamina_c_retinol: "Wygenerowana Receptura (Krem):\n- Baza hialuronowa: 75%\n- Witamina C (stabilna forma): 10%\n- Retinol (0.5%): 5%\n- Skwalan (emolient): 5%\n- Gliceryna (humektant): 4%\n- Konserwant naturalny: 1%",
+            krem_hialuronowa_witamina_c: "Wygenerowana Receptura (Krem):\n- Baza hialuronowa: 80%\n- Witamina C (stabilna forma): 15%\n- Gliceryna (humektant): 4%\n- Konserwant naturalny: 1%",
             krem_aloesowa_niacynamid: "Wygenerowana Receptura (Krem):\n- Baza aloesowa: 85%\n- Niacynamid: 5%\n- Pantenol (łagodzenie): 5%\n- Konserwant naturalny: 1%\n- Olejek lawendowy (zapach): 0.5%",
-            szampon_lipidowa_vitC_retinol: "Wygenerowana Receptura (Szampon):\n- Baza lipidowa (delikatne surfaktanty): 60%\n- Witamina C (dla skóry głowy): 2%\n- Retinol (stymulacja mieszków): 0.2%\n- Ekstrakt z pokrzywy: 5%\n- Pantenol: 3%\n- Woda destylowana: do 100%\n- Konserwant: 1%",
+            szampon_lipidowa_witamina_c_retinol: "Wygenerowana Receptura (Szampon):\n- Baza lipidowa (delikatne surfaktanty): 60%\n- Witamina C (dla skóry głowy): 2%\n- Retinol (stymulacja mieszków): 0.2%\n- Ekstrakt z pokrzywy: 5%\n- Pantenol: 3%\n- Woda destylowana: do 100%\n- Konserwant: 1%",
             szampon_hialuronowa_niacynamid: "Wygenerowana Receptura (Szampon):\n- Baza hialuronowa (nawilżające surfaktanty): 50%\n- Niacynamid (dla skóry głowy): 3%\n- Keratyna hydrolizowana: 2%\n- Gliceryna: 5%\n- Woda destylowana: do 100%\n- Konserwant: 1%",
             default_krem: "Wygenerowana Receptura (Krem):\n- Wybrana baza: 80%\n- Wybrane składniki aktywne: 15%\n- Humektanty i emolienty: 4%\n- Konserwant: 1%",
             default_szampon: "Wygenerowana Receptura (Szampon):\n- Wybrana baza (surfaktanty): 60%\n- Wybrane składniki aktywne: 5%\n- Substancje kondycjonujące: 5%\n- Woda: do 100%\n- Konserwant: 1%"
@@ -46,23 +48,33 @@ document.addEventListener('DOMContentLoaded', () => {
         modalBackdrop: document.querySelector('.modal-backdrop'),
         generateFormulaBtn: document.getElementById('generate-formula'),
         baseSelect: document.getElementById('base'),
-        activeIngredientsContainer: document.createElement('div'),
-        productTypeSelect: document.getElementById('product-type-ai'),
+        activeIngredientsPlaceholder: document.getElementById('active-ingredients-selector-placeholder'),
+        productTypeSelect: document.getElementById('product-type-ai'), 
         formulaOutput: document.getElementById('formula-output'),
         formulaText: document.getElementById('formula-text'),
+        activeIngredientsCheckboxes: null // zostanie przypisane w setupAiCreator
     };
 
     // --- Logika Kreatora (Wizard) ---
     function getUniqueOptionsFromCriteriaArray(products, key) {
-        const allOptions = products.flatMap(p => p.criteria[key] || []);
+        const allOptions = products.flatMap(p => {
+            if (p && p.criteria && Array.isArray(p.criteria[key])) {
+                return p.criteria[key];
+            }
+            return [];
+        });
         return Array.from(new Set(allOptions)).filter(Boolean).sort();
     }
     
     function getUniqueOptionsFromArray(products, key) {
-        const allOptions = products.flatMap(p => p[key] || []);
+        const allOptions = products.flatMap(p => {
+            if (p && Array.isArray(p[key])) {
+                return p[key];
+            }
+            return [];
+        });
         return Array.from(new Set(allOptions)).filter(Boolean).sort();
     }
-
 
     function initWizardConfig() {
         AppState.wizardStepsConfig = [
@@ -70,9 +82,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 id: 'grupaWiekowa',
                 question: "Dla jakiej grupy wiekowej szukasz produktu?",
                 getOptions: () => {
-                    const hasDorosly = AppState.products.some(p => p.criteria.grupaWiekowa.includes("Dorosły"));
-                    const hasDziecko = AppState.products.some(p => p.criteria.grupaWiekowa.includes("Dziecko"));
-                    
+                    const hasDorosly = AppState.products.some(p => p.criteria.grupaWiekowa && p.criteria.grupaWiekowa.includes("Dorosły"));
+                    const hasDziecko = AppState.products.some(p => p.criteria.grupaWiekowa && p.criteria.grupaWiekowa.includes("Dziecko"));
                     let options = [];
                     if (hasDorosly) options.push("Dorosły");
                     if (hasDziecko) options.push("Dziecko");
@@ -80,15 +91,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     return options.sort();
                 },
                 filterLogic: (product, choice) => {
-                    if (choice === "Wszystkie") return true;
-                    return product.criteria.grupaWiekowa.includes(choice);
+                    if (choice === "Wszystkie") return true; 
+                    return product.criteria.grupaWiekowa && product.criteria.grupaWiekowa.includes(choice);
                 }
             },
             {
                 id: 'obszarCiala',
                 question: "Dla jakiego obszaru ciała?",
                 getOptions: (filteredProducts) => getUniqueOptionsFromCriteriaArray(filteredProducts, 'obszarCiala'),
-                filterLogic: (product, choice) => product.criteria.obszarCiala.includes(choice)
+                filterLogic: (product, choice) => product.criteria.obszarCiala && product.criteria.obszarCiala.includes(choice)
             },
             {
                 id: 'dzialanieZastosowanie',
@@ -105,27 +116,27 @@ document.addEventListener('DOMContentLoaded', () => {
             {
                 id: 'chceSkladnik',
                 question: "Czy chcesz wybrać konkretny składnik aktywny?",
-                type: 'boolean',
+                type: 'boolean', 
                 options: ["Tak", "Nie"] 
             },
             {
                 id: 'mainIngredients',
                 question: "Wybierz główny składnik:",
                 getOptions: (filteredProducts) => getUniqueOptionsFromArray(filteredProducts, 'mainIngredients'),
-                filterLogic: (product, choice) => product.mainIngredients.includes(choice),
-                dependsOn: { stepId: 'chceSkladnik', value: 'Tak' }
+                filterLogic: (product, choice) => product.mainIngredients && product.mainIngredients.includes(choice),
+                dependsOn: { stepId: 'chceSkladnik', value: 'Tak' } 
             }
         ];
     }
 
     function applyFilters() {
-        let products = [...AppState.products];
+        let products = [...AppState.products]; 
         for (const key in AppState.userChoices) {
             const choice = AppState.userChoices[key];
             const stepConfig = AppState.wizardStepsConfig.find(s => s.id === key);
 
             if (stepConfig && stepConfig.filterLogic) {
-                if (key === 'chceSkladnik' && choice === 'Nie') {
+                if (key === 'chceSkladnik' && choice === 'Nie') { 
                     continue;
                 }
                 products = products.filter(p => stepConfig.filterLogic(p, choice));
@@ -135,14 +146,13 @@ document.addEventListener('DOMContentLoaded', () => {
         return products;
     }
 
-
     function renderCurrentWizardStep() {
         DOMElements.resultsContainer.classList.add('hidden');
         DOMElements.wizardContentContainer.classList.remove('hidden');
 
         const stepConfig = AppState.wizardStepsConfig[AppState.currentWizardStepIndex];
 
-        if (!stepConfig) {
+        if (!stepConfig) { 
             displayResults();
             return;
         }
@@ -151,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const dependingStepChoice = AppState.userChoices[stepConfig.dependsOn.stepId];
             if (dependingStepChoice !== stepConfig.dependsOn.value) {
                 AppState.currentWizardStepIndex++; 
-                renderCurrentWizardStep();
+                renderCurrentWizardStep(); 
                 return;
             }
         }
@@ -160,18 +170,23 @@ document.addEventListener('DOMContentLoaded', () => {
         if (stepConfig.type === 'boolean') {
             options = stepConfig.options;
         } else {
-            let productsForOptions = [...AppState.products];
-            for(let i = 0; i < AppState.currentWizardStepIndex; i++) {
-                const prevStepConfig = AppState.wizardStepsConfig[i];
-                const prevChoice = AppState.userChoices[prevStepConfig.id];
-                if (prevChoice && prevStepConfig.filterLogic) {
-                    if (prevStepConfig.id === 'chceSkladnik' && prevChoice === 'Nie') continue;
-                     productsForOptions = productsForOptions.filter(p => prevStepConfig.filterLogic(p, prevChoice));
+            let productsToGetOptionsFrom = [...AppState.products]; 
+            for (let i = 0; i < AppState.currentWizardStepIndex; i++) { 
+                const previousStep = AppState.wizardStepsConfig[i];
+                const choiceForPreviousStep = AppState.userChoices[previousStep.id];
+                if (choiceForPreviousStep && previousStep.filterLogic) {
+                    if (previousStep.id === 'chceSkladnik' && choiceForPreviousStep === 'Nie') {
+                        continue; 
+                    }
+                    productsToGetOptionsFrom = productsToGetOptionsFrom.filter(p => previousStep.filterLogic(p, choiceForPreviousStep));
                 }
             }
-            options = stepConfig.getOptions(productsForOptions);
+            if (productsToGetOptionsFrom.length === 0 && AppState.currentWizardStepIndex > 0) { 
+                displayResults();
+                return;
+            }
+            options = stepConfig.getOptions(productsToGetOptionsFrom);
         }
-
 
         if (!options || options.length === 0) {
             displayResults();
@@ -190,17 +205,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderWizardNavigation() {
-        const backButton = AppState.currentWizardStepIndex > 0 ? `<button id="back-btn" class="text-[#A0522D] hover:underline">Wróć</button>` : '<div class="w-16"></div>'; // Placeholder for alignment
-        const restartButtonOnResults = DOMElements.resultsContainer.classList.contains('hidden') ? '' : `<button id="restart-btn" class="bg-[#A0522D] text-white font-bold py-2 px-6 rounded-lg hover:bg-[#8B4513] transition">Zacznij od nowa</button>`;
+        const backButton = AppState.currentWizardStepIndex > 0 ? `<button id="back-btn" class="text-[#A0522D] hover:underline">Wróć</button>` : '<div class="w-16"></div>';
         
-        if (DOMElements.resultsContainer.classList.contains('hidden')) {
+        let visibleStepsCount = AppState.wizardStepsConfig.length;
+        if (AppState.userChoices.chceSkladnik === 'Nie' && AppState.wizardStepsConfig.find(s => s.id === 'mainIngredients')) {
+            visibleStepsCount--; 
+        }
+
+        if (DOMElements.resultsContainer.classList.contains('hidden')) { 
              DOMElements.wizardNavigation.innerHTML = `
                 ${backButton}
-                <div class="text-xs text-gray-500">Krok ${AppState.currentWizardStepIndex + 1} z ${AppState.wizardStepsConfig.filter(s => !s.dependsOn || AppState.userChoices[s.dependsOn.stepId] === s.dependsOn.value).length}</div>
-                <div class="w-16"></div> <!-- Placeholder for alignment -->
+                <div class="text-xs text-gray-500">Krok ${AppState.currentWizardStepIndex + 1} z ${visibleStepsCount}</div>
+                <div class="w-16"></div> 
             `;
-        } else {
-             DOMElements.wizardNavigation.innerHTML = restartButtonOnResults;
+        } else { 
+             DOMElements.wizardNavigation.innerHTML = `<button id="restart-btn" class="bg-[#A0522D] text-white font-bold py-2 px-6 rounded-lg hover:bg-[#8B4513] transition">Zacznij od nowa</button>`;
         }
     }
 
@@ -208,8 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
         DOMElements.wizardContentContainer.classList.add('hidden');
         DOMElements.resultsContainer.classList.remove('hidden');
 
-        const finalFilteredProducts = applyFilters();
-        
+        const finalFilteredProducts = applyFilters(); 
         const uniqueProducts = Array.from(new Map(finalFilteredProducts.map(p => [p.id, p])).values());
 
         DOMElements.resultsContainer.innerHTML = uniqueProducts.length > 0
@@ -217,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
                <div class="space-y-4">${uniqueProducts.map(createProductCardHTML).join('')}</div>`
             : '<p class="text-center text-gray-600">Przepraszamy, nie znaleziono rekomendacji dla tego połączenia. Spróbuj ponownie, wybierając mniej kryteriów lub inną kombinację.</p>';
         
-        renderWizardNavigation();
+        renderWizardNavigation(); 
     }
 
     function createProductCardHTML(product) {
@@ -246,73 +264,76 @@ document.addEventListener('DOMContentLoaded', () => {
         renderCurrentWizardStep();
     }
 
-
     function toggleMobileMenu() {
         DOMElements.mobileMenu.classList.toggle('hidden');
     }
 
     function setupAiCreator() {
         const activeIngredientsOptions = ["Witamina C", "Retinol", "Niacynamid"];
-        const container = DOMElements.activeSelect.parentElement;
+        const placeholderDiv = DOMElements.activeIngredientsPlaceholder; 
+
+        if (!placeholderDiv) {
+            console.error("Placeholder div ('active-ingredients-selector-placeholder') for AI active ingredients not found!");
+            return;
+        }
         
-        DOMElements.activeIngredientsContainer.className = "space-y-1";
+        const checkboxesContainer = document.createElement('div');
+        checkboxesContainer.className = "space-y-1";
+        
         activeIngredientsOptions.forEach(opt => {
             const checkboxId = `ai-active-${opt.toLowerCase().replace(/\s+/g, '-')}`;
-            DOMElements.activeIngredientsContainer.innerHTML += `
+            checkboxesContainer.innerHTML += `
                 <div class="flex items-center">
                     <input type="checkbox" id="${checkboxId}" name="ai_active_ingredient" value="${opt}" class="h-4 w-4 text-[#A0522D] border-gray-300 rounded focus:ring-[#A0522D] mr-2">
                     <label for="${checkboxId}" class="text-sm">${opt}</label>
                 </div>
             `;
         });
-        if (DOMElements.activeSelect && DOMElements.activeSelect.parentNode) {
-            DOMElements.activeSelect.parentNode.replaceChild(DOMElements.activeIngredientsContainer, DOMElements.activeSelect);
-        }
-        if (!document.getElementById('product-type-ai')) {
-            const productTypeLabel = document.createElement('label');
-            productTypeLabel.htmlFor = 'product-type-ai';
-            productTypeLabel.className = 'block mb-1 font-medium';
-            productTypeLabel.textContent = 'Wybierz typ produktu:';
+        
+        placeholderDiv.innerHTML = ''; 
+        placeholderDiv.appendChild(checkboxesContainer);
+        DOMElements.activeIngredientsCheckboxes = checkboxesContainer; 
 
-            const productTypeSelectHTML = `
-                <select id="product-type-ai" class="w-full p-2 border rounded-lg">
-                    <option value="Krem">Krem</option>
-                    <option value="Szampon">Szampon do włosów</option>
-                </select>
-            `;
-            const div = document.createElement('div');
-            div.appendChild(productTypeLabel);
-            div.innerHTML += productTypeSelectHTML;
-            
-            DOMElements.generateFormulaBtn.parentNode.insertBefore(div, DOMElements.generateFormulaBtn.previousSibling.previousSibling);
+        if (!DOMElements.productTypeSelect) {
+             DOMElements.productTypeSelect = document.getElementById('product-type-ai');
         }
-         DOMElements.productTypeSelect = document.getElementById('product-type-ai');
+        if (!DOMElements.productTypeSelect) {
+             console.error("product-type-ai select element still not found in DOM for AI creator.");
+        }
     }
-
 
     function generateAiFormula() {
         const base = DOMElements.baseSelect.value;
-        const selectedActiveCheckboxes = Array.from(DOMElements.activeIngredientsContainer.querySelectorAll('input[name="ai_active_ingredient"]:checked'));
+        const selectedActiveCheckboxes = DOMElements.activeIngredientsCheckboxes ? Array.from(DOMElements.activeIngredientsCheckboxes.querySelectorAll('input[name="ai_active_ingredient"]:checked')) : [];
         
         if (selectedActiveCheckboxes.length > 2) {
             alert("Możesz wybrać maksymalnie 2 składniki aktywne.");
             return;
         }
         const activeIngredients = selectedActiveCheckboxes.map(cb => cb.value);
+        
+        if (!DOMElements.productTypeSelect) {
+            DOMElements.formulaText.value = "Błąd: Nie można określić typu produktu.";
+            DOMElements.formulaOutput.classList.remove('hidden');
+            return;
+        }
         const productType = DOMElements.productTypeSelect.value;
 
         DOMElements.formulaText.value = `GENEROWANIE RECEPTURY...\nTyp: ${productType}\nBaza: ${base}\nSkładniki Aktywne: ${activeIngredients.join(', ') || 'brak'}\nProporcje: SI analizuje...`;
         DOMElements.formulaOutput.classList.remove('hidden');
 
         setTimeout(() => {
-            let recipeKey = `${productType.toLowerCase()}_${base.toLowerCase().split(' ')[0]}`;
-            if (activeIngredients.length > 0) {
-                 recipeKey += `_${activeIngredients.join('_').toLowerCase().replace(/\s+/g, '-')}`;
+            let recipeKeyPartBase = base.toLowerCase().split(' ')[0].replace(/ą/g, 'a').replace(/ł/g, 'l'); 
+            let recipeKeyPartActives = activeIngredients.map(a => a.toLowerCase().replace(/\s+/g, '-').replace(/ę/g, 'e')).sort().join('_'); 
+            
+            let recipeKey = `${productType.toLowerCase()}_${recipeKeyPartBase}`;
+            if (recipeKeyPartActives) {
+                recipeKey += `_${recipeKeyPartActives}`;
             }
            
             let recipe = AppState.aiCreatorRecipes[recipeKey];
 
-            if (!recipe) {
+            if (!recipe) { 
                 recipe = productType === 'Krem' ? AppState.aiCreatorRecipes.default_krem : AppState.aiCreatorRecipes.default_szampon;
                 recipe = recipe.replace('Wybrana baza', base);
                 recipe = recipe.replace('Wybrane składniki aktywne', activeIngredients.join(' + ') || 'podstawowe');
@@ -322,11 +343,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1500);
     }
 
-
-    // --- Modal ---
     function openModal(title, content) {
         DOMElements.modalTitle.innerText = title;
-        DOMElements.modalBody.innerText = content;
+        DOMElements.modalBody.innerText = content; 
         DOMElements.modal.classList.remove('hidden');
         DOMElements.modal.classList.add('flex');
         setTimeout(() => {
@@ -344,13 +363,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 300);
     }
     
-    // --- Główna funkcja inicjalizująca ---
     function initApp() {
         initWizardConfig();
         renderCurrentWizardStep();
-        setupAiCreator();
+        setupAiCreator(); 
 
-        // Event Listeners dla Kreatora (Wizard)
         DOMElements.wizard.addEventListener('click', (e) => {
             const choiceButton = e.target.closest('button[data-step-id]');
             const backButton = e.target.closest('#back-btn');
@@ -361,20 +378,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 const { stepId, value } = choiceButton.dataset;
                 AppState.userChoices[stepId] = value;
                 
-
-                if (stepId === 'chceSkladnik' && value === 'Nie' && AppState.wizardStepsConfig[AppState.currentWizardStepIndex + 1]?.id === 'mainIngredients') {
-                     AppState.currentWizardStepIndex += 2;
+                const nextStepIndexCand = AppState.currentWizardStepIndex + 1;
+                if (stepId === 'chceSkladnik' && value === 'Nie' && 
+                    AppState.wizardStepsConfig[nextStepIndexCand]?.id === 'mainIngredients') {
+                     AppState.currentWizardStepIndex += 2; 
                 } else {
                     AppState.currentWizardStepIndex++;
                 }
                 renderCurrentWizardStep();
             } else if (backButton) {
                 AppState.currentWizardStepIndex--;
-                const stepToClear = AppState.wizardStepsConfig[AppState.currentWizardStepIndex];
-                if (stepToClear) {
-                    delete AppState.userChoices[stepToClear.id];
-                    if (AppState.wizardStepsConfig[AppState.currentWizardStepIndex + 1]?.id === 'mainIngredients') {
-                        delete AppState.userChoices['mainIngredients'];
+                const stepToClearConfig = AppState.wizardStepsConfig[AppState.currentWizardStepIndex]; 
+                if (stepToClearConfig) {
+                    delete AppState.userChoices[stepToClearConfig.id];
+                    
+                    const mainIngredientsStepIndex = AppState.wizardStepsConfig.findIndex(s => s.id === 'mainIngredients');
+                    if (mainIngredientsStepIndex !== -1 && AppState.currentWizardStepIndex < mainIngredientsStepIndex) {
+                        if (AppState.userChoices['mainIngredients']) {
+                            delete AppState.userChoices['mainIngredients'];
+                        }
                     }
                 }
                 renderCurrentWizardStep();
@@ -384,20 +406,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 const { action, id } = actionButton.dataset;
                 const product = AppState.products.find(p => p.id == id);
                 if (product && action === 'ingredients') {
-                    const formattedIngredients = product.ingredients.replace(/, /g, ',\n');
+                    const formattedIngredients = product.ingredients ? product.ingredients.replace(/, /g, ',\n') : "Brak danych o składzie.";
                     openModal(`Skład INCI: ${product.name}`, formattedIngredients);
                 }
             }
         });
 
-        // Pozostałe listenery
         DOMElements.closeModalBtn.addEventListener('click', closeModal);
         DOMElements.modalBackdrop.addEventListener('click', closeModal);
         DOMElements.mobileMenuButton.addEventListener('click', toggleMobileMenu);
         DOMElements.mobileMenu.addEventListener('click', (e) => {
             if (e.target.tagName === 'A') toggleMobileMenu();
         });
-        DOMElements.generateFormulaBtn.addEventListener('click', generateAiFormula);
+
+        if (DOMElements.generateFormulaBtn) {
+            DOMElements.generateFormulaBtn.addEventListener('click', generateAiFormula);
+        } else {
+            console.error("Generate Formula Button not found!");
+        }
     }
 
     initApp();
